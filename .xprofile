@@ -1,0 +1,135 @@
+#! /bin/sh
+
+in_path() {
+  NEEDLE=:"$1":
+  HAYSTACK=:$2:
+  echo $HAYSTACK | grep $NEEDLE >/dev/null 2>&1
+}
+
+startup() {
+  ~/.screenlayout/2-on-left.sh 
+
+  redshift -l 25:85 -b 0.6:0.4 -g 1.5 -o  &
+  # systemctl start --user pulseaudio &
+  xset b 10 1 10
+  xset -dpms
+  xset s off
+
+  # # startup polkit agent
+  # /usr/bin/lxpolkit &
+
+  # configure fonts
+  F=`find ~/.fonts -iname fonts.dir | while read F ; do dirname $F ; done | tr '\n' ',' | sed 's/,$//g'`
+  xset +fp $F
+  xset fp rehash
+
+  # fire_emacs GNUS_SERVER >/dev/null 2>&1 &
+  # { sleep 1 ; fire_emacs ; } >/dev/null 2>&1 &
+
+  {
+    fire_emacs
+    fire_emacs GNUS_SERVER
+  } > /dev/null 2>&1 &
+
+  export TERMINAL=tmux
+
+  zotero &
+  slack &
+  watch-servers &
+
+  xinput set-prop "HUION PenTablet Pad" \
+	 --type=float "Coordinate Transformation Matrix" \
+	 0.68085106383 0 0 0 0.675 0 0 0 1
+  xinput set-prop "HUION PenTablet Pen Pen (0)" \
+	 --type=float "Coordinate Transformation Matrix" \
+	 0.68085106383 0 0 0 0.675 0 0 0 1
+
+  ~/.fehbg
+}
+
+
+## setup paths
+## -----------------------------------
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    export PATH="$HOME/bin:$PATH"
+fi
+
+# set PATH so it includes user's private usr/bin if it exists
+if [ -d "$HOME/usr/bin" ] ; then
+    export PATH="$HOME/usr/bin:$PATH"
+fi
+
+# set PATH so it includes user's private usr/local/bin if it exists
+if [ -d "$HOME/usr/local/bin" ] ; then
+    export PATH="$HOME/usr/local/bin:$PATH"
+fi
+
+# set PATH so it includes user's private .local/bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    export PATH="$HOME/.local/bin:$PATH"
+fi
+
+# set PATH to include screelayouts
+if [ -d "$HOME/.screenlayout" ] ; then
+    export PATH="$PATH:$HOME/.screenlayout"
+fi
+
+# set CPATH so it includes user's private include if it exists
+if [ -d "$HOME/include" ] ; then
+    export CPATH="$HOME/include:$CPATH"
+fi
+
+# set CPATH so it includes user's private usr/include if it exists
+if [ -d "$HOME/usr/include" ] ; then
+    export CPATH="$HOME/usr/include:$CPATH"
+fi
+
+# set CPATH so it includes user's private usr/local/include if it exists
+if [ -d "$HOME/usr/local/include" ] ; then
+    export CPATH="$HOME/usr/local/include:$CPATH"
+fi
+
+# set LIBRARY_PATH so it includes user's private lib if it exists
+if [ -d "$HOME/lib" ] ; then
+    export LIBRARY_PATH="$HOME/lib:$LIBRARY_PATH"
+fi
+
+# set LIBRARY_PATH so it includes user's private usr/lib if it exists
+if [ -d "$HOME/usr/lib" ] ; then
+    export LIBRARY_PATH="$HOME/usr/lib:$LIBRARY_PATH"
+fi
+
+# set LIBRARY_PATH so it includes user's private usr/local/lib if it exists
+if [ -d "$HOME/usr/local/lib" ] ; then
+    export LIBRARY_PATH="$HOME/usr/local/lib:$LIBRARY_PATH"
+fi
+
+# set GTAGSLIBPATH path variable for Gtags
+if [ -d "$HOME/.gtags" ] ; then
+    export GTAGSLIBPATH="$HOME/.gtags:$GTAGSLIBPATH"
+fi
+
+[ -d "$HOME/.local/share/info" ] &&
+  export INFOPATH="$INFOPATH:$HOME/.local/share/info"
+
+# set NODE_PATH for node invocation
+[ -d "$HOME/.local/lib/node_modules" ] && {
+  in_path $HOME/.local/lib/node_modules $NODE_PATH || 
+    export NODE_PATH="$HOME/.local/lib/node_modules:$NODE_PATH"
+}
+
+# ## proxy setup
+# ## -----------------------------------
+# proxy="http://127.0.0.1:3128"
+# export			\
+#   http_proxy=$proxy	\
+#   https_proxy=$proxy	\
+#   ftp_proxy=$proxy	\
+#   socks_proxy=$proxy
+
+
+## startup
+## -----------------------------------
+startup
