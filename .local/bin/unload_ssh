@@ -1,0 +1,6 @@
+#! /usr/bin/zsh
+
+cat /proc/mounts | \
+  grep svr | \
+  cut -d\  -f2 | \
+  parallel 'fusermount -u {}'

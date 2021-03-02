@@ -1,0 +1,6 @@
+#! /bin/sh
+
+i3-msg 'workspace 7:GIMP; exec gimp'
+i3-msg 'workspace 9:Zotero; exec zotero'
+i3-msg 'workspace 10:Slack; exec slack'
+${HOME}/.fehbg

@@ -1,0 +1,7 @@
+#! /bin/zsh
+
+parallel 'echo ailab{1} cseproj{2} ; ssh ailab{1} "ping -c4 cseproj{2}"' \
+         ::: `seq 5 9 && seq 0 2` \
+         ::: `seq 145 152`  \
+         2>&1 | \
+  tee ~/tmp/servers_ping.log

@@ -1,0 +1,3 @@
+#! /bin/zsh
+
+scan | awk '{print $3}' | xargs gimp

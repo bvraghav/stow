@@ -1,0 +1,20 @@
+#! /bin/zsh
+
+output=~/tmp/scans/$(ts).png
+[ ! -d ${output:h} ] && 
+  mkdir -p ${output:h}
+
+scan_ () {
+  scanimage --format=png \
+            --progress \
+	    --resolution=300 \
+	    --mode=color \
+	    --device=`scanner` \
+            $@
+}
+
+{ scan_ $@ > $output || {
+    scanner --force && \
+      scan_ $@ > $output
+  }} && \
+    echo "Saved to: $output"

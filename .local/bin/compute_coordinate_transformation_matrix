@@ -1,0 +1,57 @@
+#! /bin/env python
+
+import subprocess
+import re
+import sys
+from argparse import Namespace as NS
+
+left_command = (
+  "xrandr | "
+  "grep ' connected ' | "
+  "grep primary | "
+  "awk '{print $4}'"
+)
+
+right_command = (
+  "xrandr | "
+  "grep ' connected ' | "
+  "grep -v primary | "
+  "awk '{print $3}'"
+)
+
+run = lambda cmd: (
+  subprocess.run(
+    cmd,
+    shell=True,
+    capture_output=True
+  )
+  .stdout
+  .decode()
+  .rstrip("\n")
+)
+
+geometry = lambda gm: (
+  NS(**dict(zip(
+    "whxy",
+    [int(s) for s in re.split(r'[x+]', gm)],
+  )))
+)
+
+left = geometry(run(left_command))
+right = geometry(run(right_command))
+
+print(f'left:{left}', file=sys.stderr)
+print(f'right:{right}', file=sys.stderr)
+
+W = left.w + right.w
+H = max(left.h + left.y, right.h + right.y)
+
+print(f'W:{W}, H:{H}', file=sys.stderr)
+
+c0 = left.w / W
+c1 = left.x / W
+c2 = left.h / H
+c3 = left.y / H
+
+print (f'{c0} 0 {c1} 0 {c2} {c3} 0 0 1', file=sys.stderr)
+print (f'{c0} 0 {c1} 0 {c2} {c3} 0 0 1')

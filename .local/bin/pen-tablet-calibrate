@@ -1,0 +1,12 @@
+#! /usr/bin/zsh
+
+CTM=`compute_coordinate_transformation_matrix`
+
+xinput set-prop "HUION PenTablet Pad" \
+       --type=float "Coordinate Transformation Matrix" \
+       ${=CTM}
+xinput set-prop "HUION PenTablet Pen Pen (0)" \
+       --type=float "Coordinate Transformation Matrix" \
+       ${=CTM}
+
+

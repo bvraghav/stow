@@ -1,0 +1,19 @@
+#! /bin/zsh
+
+# for I in $@ ; do \
+#   echo ; \
+#   echo ; \
+#   echo ; \
+#   printf "%80s\n" | \
+#     tr " " "#" ; \
+#   echo ailab$I ; \
+#   ssh ailab$I '~/.local/bin/nvidia-smi-htop'
+# done
+
+echo $@ | tr ' ' '\n' | parallel 'echo ; \
+  echo ; \
+  echo ; \
+  printf "%80s\n" | \
+    tr " " "#" ; \
+  echo ailab{} ; \
+  ssh ailab{} "~/.local/bin/nvidia-smi-htop"'

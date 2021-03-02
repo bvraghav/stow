@@ -1,0 +1,20 @@
+#! /bin/sh
+
+show_help() {
+  echo "Usage:"
+  echo "$(basename $0) FILENAME"
+}
+
+N=$#
+
+if [[ $N -gt 1 || -z $1 ]] ; then
+  
+  echo "[error] slug_file: Wrong number of arguments." >&2
+  echo "[error] slug_file: Got $N; $1" >&2
+
+  show_help
+  
+  exit 65
+fi
+
+mv "$1" "$(slug_file "$1")"

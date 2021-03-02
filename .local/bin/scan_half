@@ -1,0 +1,3 @@
+#! /bin/zsh
+
+scan -y 150

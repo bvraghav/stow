@@ -1,0 +1,4 @@
+#! /bin/bash
+
+cat ~/.ssh/config | grep -A4 'Host '"$1" | grep -i hostname | awk '{print $2}'
+

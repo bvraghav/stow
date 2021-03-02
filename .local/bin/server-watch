@@ -1,0 +1,4 @@
+#! /bin/sh
+
+watch -n30 --color server-watch--watchus $@
+

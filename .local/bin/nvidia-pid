@@ -1,0 +1,15 @@
+#! /bin/bash
+
+N0=$(nvidia-smi |\
+       grep -n '==' |\
+       cut -d: -f1 |\
+       sed -n '2,$p')
+(( ++N0 ))
+
+N1=$(nvidia-smi |\
+       wc -l)
+(( --N1 ))
+
+nvidia-smi |\
+  sed -n "${N0},${N1}p" |\
+  awk '{print $3}' 

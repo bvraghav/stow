@@ -1,0 +1,18 @@
+#! /bin/sh
+
+CMD="emacs --daemon"
+CHK="emacsclient"
+
+[ ! -z "$1" ] && {
+  CMD="$CMD=$1"
+  CHK="$CHK -s $1"
+}
+
+CHK="$CHK -n -e '(message \"Hello\")'"
+
+## debug
+# echo $CHK
+# echo $CMD
+
+sh -c "$CHK" || $CMD
+

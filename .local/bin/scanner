@@ -1,0 +1,37 @@
+#! /bin/bash
+
+device() {
+  mkfifo ~/tmp/sd_stream
+
+  scanimage -L | \
+    cut -d'`' -f2 | \
+    cut -d"'"  -f1 | \
+    sed -n '/ip=/!p' | \
+    tee ~/tmp/sd_stream &
+
+  N=`cat ~/tmp/sd_stream | wc -l`
+
+  rm ~/tmp/sd_stream
+
+  [ $N == "1" ]
+}
+
+device_error() {
+  echo "Cannot detect scanner"
+}
+
+detect_device()  {
+  D=$(device) || {
+    E=$?
+    device_error >&2
+    return $E
+  }
+  echo $D > ~/.scan_dev
+}
+
+[[ ! -f ~/.scan_dev || ! -z $1 ]] && {
+  detect_device || \
+    exit 64
+}
+
+cat ~/.scan_dev
