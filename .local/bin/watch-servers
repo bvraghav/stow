@@ -1,9 +1,8 @@
 #! /bin/zsh
 
-# TODO: use gpuw instead of tmux a -t watch as remote command.
-
 WM_CLASS_GPU="watch-gpu-servers"
-GPUW="~/.local/bin/gpuw"
+# GPUW="'~/.local/bin/gpuw'"
+GPUW="tmux new -As watch nvtop"
 
 is_session() {
   tmux ls | cut -d: -f1 | grep $1
