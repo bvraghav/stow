@@ -231,7 +231,8 @@ bindsym $mod+Shift+Delete exit
 bindsym $mod+Shift+Return exec firefox -P D
 bindsym control+$mod+m exec firefox -P G
 bindsym control+$mod+s exec firefox -P S
-bindsym control+$mod+p exec firefox -P P --private-window
+# bindsym control+$mod+p exec firefox -P P --private-window
+bindsym control+$mod+p exec chromium --user-data-dir=${HOME}/.config/chromium-P --incognito --new-window
 bindsym control+$mod+j exec firefox -P Jupyter --new-instance
 
 # file-manager
