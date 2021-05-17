@@ -43,6 +43,9 @@ startup() {
   xinput set-prop "HUION PenTablet Pen Pen (0)" \
 	 --type=float "Coordinate Transformation Matrix" \
 	 0.68085106383 0 0 0 0.675 0 0 0 1
+  # Enable touch pad
+  # ... on Dell Laptop
+  xinput set-prop 13 309 1
 
   ~/.fehbg
 }
