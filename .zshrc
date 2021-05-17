@@ -42,7 +42,8 @@ zle -N down-line-or-beginning-search
 
 ## Zsh Highlighting
 ## -----------------------------------
-source /home/bvr/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# source /home /bvr/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 
 
