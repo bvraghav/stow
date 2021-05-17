@@ -1,0 +1,31 @@
+#! /bin/zsh
+
+get_touchpad() {
+  xinput list			\
+    | grep -i touchpad		\
+    | awk -F'id=' '{print $2}'	\
+    | awk '{print $1}'  
+}
+
+get_state() {
+  dev=$(get_touchpad)
+  xinput list-props ${dev}	\
+    | grep -i device		\
+    | grep -i enable		\
+    | awk -F: '{ print $2 }'	\
+    | tr -d '\t'
+}
+
+get_action() {
+  [ $(get_state) -eq 0 ]	\
+    && echo --enable		\
+      || echo --disable
+}
+
+main() {
+  dev=$(get_touchpad)
+  action=$(get_action)
+  xinput ${=action} ${dev}
+}
+
+main

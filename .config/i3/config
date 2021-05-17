@@ -308,6 +308,9 @@ bindsym $mod+bracketright exec pactl set-sink-volume $(pvsink) +5%
 # Calendar
 bindsym $mod+Control+c exec uxterm -e calcurse
 
+# Touchpad toggle for Laptop
+bindsym XF86TouchpadToggle exec toggle-touchpad
+
 ## Startup Scripts
 ## -----------------------------------
 # exec --no-startup-id feh --bg-scale -z ~/Pictures/wallpapers
