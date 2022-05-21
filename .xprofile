@@ -6,10 +6,20 @@ in_path() {
   echo $HAYSTACK | grep $NEEDLE >/dev/null 2>&1
 }
 
-startup() {
-  ~/.screenlayout/2-on-left.sh 
+find_fonts() {
+  find ~/.fonts -iname fonts.dir          \
+    | while read F ; do dirname $F ; done \
+    | tr '\n' ','                         \
+    | sed 's/,$//g'
+}
 
-  redshift -l 25:85 -b 0.6:0.4 -g 1.5 -o  &
+startup() {
+  ~/.screenlayout/vga-vert.sh
+
+  # https://wiki.archlinux.org/title/Xorg/Keyboard_configuration
+  setxkbmap gb
+
+  redshift -l 50:0 -b 0.5:0.3 -t 4500:2500 -o  &
   # systemctl start --user pulseaudio &
   xset b 10 1 10
   xset -dpms
@@ -19,7 +29,7 @@ startup() {
   # /usr/bin/lxpolkit &
 
   # configure fonts
-  F=`find ~/.fonts -iname fonts.dir | while read F ; do dirname $F ; done | tr '\n' ',' | sed 's/,$//g'`
+  F=`find_fonts`
   xset +fp $F
   xset fp rehash
 
@@ -28,14 +38,14 @@ startup() {
 
   {
     fire_emacs
-    fire_emacs GNUS_SERVER
+    # fire_emacs GNUS_SERVER
   } > /dev/null 2>&1 &
 
   export TERMINAL=tmux
 
-  zotero &
-  slack &
-  watch-servers &
+  # zotero &
+  # slack &
+  # watch-servers &
 
   xinput set-prop "HUION PenTablet Pad" \
 	 --type=float "Coordinate Transformation Matrix" \
@@ -43,9 +53,20 @@ startup() {
   xinput set-prop "HUION PenTablet Pen Pen (0)" \
 	 --type=float "Coordinate Transformation Matrix" \
 	 0.68085106383 0 0 0 0.675 0 0 0 1
+
   # Enable touch pad
   # ... on Dell Laptop
-  xinput set-prop 13 309 1
+  # https://wiki.archlinux.org/title/Libinput
+  xinput set-prop                              \
+         'AlpsPS/2 ALPS DualPoint TouchPad'    \
+         --type=int 'libinput Tapping Enabled' \
+         1
+
+  # Stick acceleration control
+  xinput set-prop                              \
+         'AlpsPS/2 ALPS DualPoint Stick'       \
+         --type=float 'libinput Accel Speed'   \
+         -0.2
 
   ~/.fehbg
 }
