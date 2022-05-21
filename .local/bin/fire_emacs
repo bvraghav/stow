@@ -14,5 +14,6 @@ CHK="$CHK -n -e '(message \"Hello\")'"
 # echo $CHK
 # echo $CMD
 
-sh -c "$CHK" || $CMD
+source ~/miniconda3/bin/activate emacs && \
+    sh -c "$CHK" || $CMD
 
