@@ -203,10 +203,10 @@ bar {
 workspace_auto_back_and_forth yes
 
 # terminal
-bindsym $mod+Return exec --no-startup-id uxterm -ls
+bindsym $mod+Return exec --no-startup-id xterm -ls
 
-# empty workspace
-bindsym control+$mod+w exec --no-startup-id i3-empty-workspace
+# # empty workspace
+# bindsym control+$mod+w exec --no-startup-id i3-empty-workspace
 
 # rename workspace
 bindsym $mod+Shift+w exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
@@ -228,12 +228,13 @@ font -xos4-terminus-*-*-*-*-12-*-*-*-*-*-*-*
 bindsym $mod+Shift+Delete exit
 
 # browser
-bindsym $mod+Shift+Return exec firefox -P D
-bindsym control+$mod+m exec firefox -P G
-bindsym control+$mod+s exec firefox -P S
-# bindsym control+$mod+p exec firefox -P P --private-window
 bindsym control+$mod+p exec chromium --user-data-dir=${HOME}/.config/chromium-P --incognito --new-window
-bindsym control+$mod+j exec firefox -P Jupyter --new-instance
+bindsym control+$mod+g exec chromium --user-data-dir=${HOME}/.config/chromium-G --app="https://google.com" --password-store=gnome
+bindsym control+$mod+m exec chromium --user-data-dir=${HOME}/.config/chromium-M --app="https://outlook.office.com/mail" --password-store=gnome
+bindsym control+$mod+w exec chromium --user-data-dir=${HOME}/.config/chromium-W --app="https://web.whatsapp.com/" --password-store=gnome
+bindsym control+$mod+j exec chromium --user-data-dir=${HOME}/.config/chromium-J --incognito --new-window
+bindsym $mod+enter exec chromium --user-data-dir=${HOME}/.config/chromium-D --incognito --new-window
+
 
 # file-manager
 bindsym $mod+e exec pcmanfm
@@ -295,8 +296,10 @@ bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-# Screen Lock
-bindsym $mod+q exec i3lock
+# # Screen Lock
+# bindsym $mod+q exec i3lock
+# Switch to greeter
+bindsym $mod+q exec dm-tool switch-to-greeter
 
 # Suspend
 bindsym $mod+grave exec systemctl suspend
