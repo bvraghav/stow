@@ -66,35 +66,37 @@ alias -g emacs-init='~/.emacs.d/init.el'
 
 
 
-## Env
-## -----------------------------------
-PATH="/home/bvr/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/bvr/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/bvr/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/bvr/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/bvr/perl5"; export PERL_MM_OPT;
+# ## Env
+# ## -----------------------------------
+# PATH="/home/bvr/perl5/bin${PATH:+:${PATH}}"; export PATH;
+# PERL5LIB="/home/bvr/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+# PERL_LOCAL_LIB_ROOT="/home/bvr/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+# PERL_MB_OPT="--install_base \"/home/bvr/perl5\""; export PERL_MB_OPT;
+# PERL_MM_OPT="INSTALL_BASE=/home/bvr/perl5"; export PERL_MM_OPT;
 
 
 ## Load simple functions
 ## ----------------------------------------------------
 source ~/.functions.zsh
 
-
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/rbv23/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/webr/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/rbv23/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/rbv23/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/home/webr/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/webr/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/rbv23/miniconda3/bin:$PATH"
+        export PATH="/home/webr/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
 
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 
