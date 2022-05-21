@@ -2,6 +2,9 @@
 HISTFILE=~/.zsh_histfile
 HISTSIZE=10000
 SAVEHIST=10000
+setopt autocd extendedglob nomatch notify
+unsetopt beep
+bindkey -e
 # End of lines configured by zsh-newuser-install
 
 # The following lines were added by compinstall
@@ -13,8 +16,12 @@ compinit
 
 ## Prompt
 ## -----------------------------------
-#This prompt has been improvised over pws theme
+# # Initialise prompt
+# autoload -Uz promptinit
+# promptinit
+# prompt fire
 
+# This prompt has been improvised over pws theme
 PROMPT="%F{red}%B%(?..(%?%))%F{white}%(2L.+.)%(1j.[%j].)%F{cyan}%b%(t.Ding!.%D{%H:%M}) %F{magenta}%n%F{yellow}@%F{magenta}%m %F{yellow}%b%3~%B>%f%b "
 
 ## Zsh Options
@@ -42,8 +49,8 @@ zle -N down-line-or-beginning-search
 
 ## Zsh Highlighting
 ## -----------------------------------
-# source /home /bvr/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 
 
@@ -75,14 +82,14 @@ source ~/.functions.zsh
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/bvr/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/rbv23/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/bvr/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/bvr/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/home/rbv23/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/rbv23/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/bvr/miniconda3/bin:$PATH"
+        export PATH="/home/rbv23/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
