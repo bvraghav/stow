@@ -79,16 +79,29 @@ alias -g emacs-init='~/.emacs.d/init.el'
 ## ----------------------------------------------------
 source ~/.functions.zsh
 
+## ----------------------------------------------------
+
+## Following code for conda init has been edited by
+## BVR: Abstracted out home directories for conda to
+## function.
+
+## 1. Abstract out the conda root folder and the rest all
+## remains good.
+
+## ----------------------------------------------------
+
+bvr__conda_root=$(realpath ~/miniconda3)
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/webr/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$("${bvr__conda_root}"/bin/conda 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/webr/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/webr/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "${bvr__conda_root}/etc/profile.d/conda.sh" ]; then
+        . "${bvr__conda_root}/etc/profile.d/conda.sh"
     else
-        export PATH="/home/webr/miniconda3/bin:$PATH"
+        export PATH="${bvr__conda_root}/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -99,80 +112,3 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-
-
-
-
-
-
-
-
-## NPM completion script
-## ----------------------------------------------------
-
-# added for npm-completion https://github.com/Jephuff/npm-bash-completion
-PATH_TO_NPM_COMPLETION="/home/webr/npm-global/lib/node_modules/npm-completion"
-source $PATH_TO_NPM_COMPLETION/npm-completion.sh
-
-###-begin-npm-completion-###
-#
-# npm command completion script
-#
-# Installation: npm completion >> ~/.bashrc  (or ~/.zshrc)
-# Or, maybe: npm completion > /usr/local/etc/bash_completion.d/npm
-#
-
-if type complete &>/dev/null; then
-  _npm_completion () {
-    local words cword
-    if type _get_comp_words_by_ref &>/dev/null; then
-      _get_comp_words_by_ref -n = -n @ -n : -w words -i cword
-    else
-      cword="$COMP_CWORD"
-      words=("${COMP_WORDS[@]}")
-    fi
-
-    local si="$IFS"
-    IFS=$'\n' COMPREPLY=($(COMP_CWORD="$cword" \
-                           COMP_LINE="$COMP_LINE" \
-                           COMP_POINT="$COMP_POINT" \
-                           npm completion -- "${words[@]}" \
-                           2>/dev/null)) || return $?
-    IFS="$si"
-    if type __ltrim_colon_completions &>/dev/null; then
-      __ltrim_colon_completions "${words[cword]}"
-    fi
-  }
-  complete -o default -F _npm_completion npm
-elif type compdef &>/dev/null; then
-  _npm_completion() {
-    local si=$IFS
-    compadd -- $(COMP_CWORD=$((CURRENT-1)) \
-                 COMP_LINE=$BUFFER \
-                 COMP_POINT=0 \
-                 npm completion -- "${words[@]}" \
-                 2>/dev/null)
-    IFS=$si
-  }
-  compdef _npm_completion npm
-elif type compctl &>/dev/null; then
-  _npm_completion () {
-    local cword line point words si
-    read -Ac words
-    read -cn cword
-    let cword-=1
-    read -l line
-    read -ln point
-    si="$IFS"
-    IFS=$'\n' reply=($(COMP_CWORD="$cword" \
-                       COMP_LINE="$line" \
-                       COMP_POINT="$point" \
-                       npm completion -- "${words[@]}" \
-                       2>/dev/null)) || return $?
-    IFS="$si"
-  }
-  compctl -K _npm_completion npm
-fi
-
-## end-npm-completion ##
-## ----------------------------------------------------

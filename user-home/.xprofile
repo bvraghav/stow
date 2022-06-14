@@ -19,7 +19,7 @@ startup() {
   # https://wiki.archlinux.org/title/Xorg/Keyboard_configuration
   setxkbmap gb
 
-  redshift -l 50:0 -b 0.5:0.3 -t 4500:2500 -o  &
+  redshift -l 50:0 -b 0.6:0.4 -t 3500:2500 -o  &
   # systemctl start --user pulseaudio &
   xset b 10 1 10
   xset -dpms
@@ -69,6 +69,8 @@ startup() {
          -0.2
 
   ~/.fehbg
+
+  nm-applet &
 }
 
 

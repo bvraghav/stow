@@ -232,6 +232,7 @@ bindsym control+$mod+p exec chromium --user-data-dir=${HOME}/.config/chromium-P 
 bindsym control+$mod+g exec chromium --user-data-dir=${HOME}/.config/chromium-G --app="https://google.com" --password-store=gnome
 bindsym control+$mod+m exec chromium --user-data-dir=${HOME}/.config/chromium-M --app="https://outlook.office.com/mail" --password-store=gnome
 bindsym control+$mod+w exec chromium --user-data-dir=${HOME}/.config/chromium-W --app="https://web.whatsapp.com/" --password-store=gnome
+bindsym control+$mod+l exec chromium --user-data-dir=${HOME}/.config/chromium-L --app="https://leetcode.com/" --password-store=gnome
 bindsym control+$mod+j exec chromium --user-data-dir=${HOME}/.config/chromium-J --incognito --new-window
 bindsym $mod+enter exec chromium --user-data-dir=${HOME}/.config/chromium-D --incognito --new-window
 
