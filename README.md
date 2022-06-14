@@ -19,3 +19,11 @@ the gimp plugins may be installed as follows.
 VER=`gimp --version | tr ' ' '\n' | tac | head -1 | cut -d. -f 1,2`
 stow -t ~/.config/GIMP/${VER}/plug-ins -S gimp-plugins
 ```
+
+3. **NPMRC**  
+[Please use nvm](https://github.com/nvm-sh/nvm) instead
+of system install of node. That is far easier.  
+However, for some reason, if at all a system install of
+node is required, and there exists a need for defining
+a global prefix directory so that `npm install -g`
+works, copy the config from [`.npmrc` here](.npmrc)
