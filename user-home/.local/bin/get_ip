@@ -1,4 +1,17 @@
 #! /bin/bash
 
-cat ~/.ssh/config | grep -A4 'Host '"$1" | grep -i hostname | awk '{print $2}'
+# cat ~/.ssh/config |      \
+#   grep -A4 'Host '"$1" | \
+#   grep -i hostname |     \
+#   awk '{print $2}'
+
+# cat ~/.ssh/config |                 \
+#   sed -n '/tractor/,/hostname/Ip' | \
+#   grep -i hostname |                \
+#   awk '{print $2}'
+
+cat ~/.ssh/config                   \
+  | sed -n '/tractor/,/hostname/Ip' \
+  | tail -1                         \
+  | awk '{print $2}'
 
