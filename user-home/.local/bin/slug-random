@@ -1,0 +1,7 @@
+#! /bin/zsh
+
+N=1
+[ -z ${1} ] || N=${1}
+
+WORDS=`cat ~/data/english-language-words.txt | shuf | head -n ${N}`
+echo ${=WORDS:l} | sed 's, ,-,g'

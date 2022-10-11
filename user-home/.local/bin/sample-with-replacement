@@ -1,0 +1,23 @@
+#! /bin/env python
+
+import logging as LG
+LG.basicConfig(
+  level=LG.INFO,
+  format='%(levelname)-8s: [%(name)s] %(message)s'
+)
+
+import random
+import sys
+
+
+lg = LG.getLogger(f'sample-with-replacement:{__name__}')
+
+inputs = list(sys.stdin.readlines())
+k = int(sys.argv[1] if len(sys.argv) > 1 else 1)
+if len(inputs) > 0 :
+  outputs = random.choices(inputs, k=k,)
+  outputs = ''.join(outputs)
+  sys.stdout.write(outputs)
+  raise SystemExit(0)
+
+lg.warning(f'Empty inputs. Exiting.')

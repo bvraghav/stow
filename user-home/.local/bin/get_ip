@@ -11,7 +11,7 @@
 #   awk '{print $2}'
 
 cat ~/.ssh/config                   \
-  | sed -n '/tractor/,/hostname/Ip' \
+  | sed -n '/'${1}'/,/hostname/Ip'  \
   | tail -1                         \
   | awk '{print $2}'
 

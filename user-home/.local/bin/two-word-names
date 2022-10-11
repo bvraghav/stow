@@ -1,0 +1,21 @@
+#! /bin/zsh
+
+# Number of names to be generated.
+N=${1:-1}
+
+[ -f ~/tmp/adj.list ] \
+  || curl -sL -o ~/tmp/adj.list \
+          "https://bvraghav.com/d/adj.list"
+
+[ -f ~/tmp/architect-names.list ] \
+  || curl -sL -o ~/tmp/architect-names.list \
+          "https://bvraghav.com/d/architect-names.list"
+
+
+
+paste -d_ \
+      <(cat ~/tmp/adj.list \
+          | sample-with-replacement ${N}) \
+      <(cat ~/tmp/architect-names.list \
+          | sample-with-replacement ${N}) \
+  | sort
