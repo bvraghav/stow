@@ -1,0 +1,16 @@
+#! /bin/zsh
+
+echo 'NUM_ARRAYS: ' ${#} >&2
+
+ALL_JSON=$(mktemp)
+echo ${ALL_JSON} >&2
+
+for arg ; do
+    shift
+    echo ${arg} >&2
+    cat ${arg} | jq '.[]' -r >> ${ALL_JSON}
+done
+
+cat ${ALL_JSON} | jq -Rn '[ inputs ]'
+
+rm ${ALL_JSON}
