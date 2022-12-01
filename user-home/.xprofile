@@ -37,7 +37,7 @@ startup() {
   # { sleep 1 ; fire_emacs ; } >/dev/null 2>&1 &
 
   {
-    fire_emacs
+    fire_emacs --with-daemon --no-frame
     # fire_emacs GNUS_SERVER
   } > /dev/null 2>&1 &
 

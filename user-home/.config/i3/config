@@ -246,7 +246,7 @@ bindsym $mod+w layout tabbed
 bindsym $mod+Shift+s layout toggle split
 
 # emacsclient
-bindsym $mod+z exec --no-startup-id emacsclient -c
+bindsym $mod+z exec --no-startup-id fire_emacs
 
 # gnus
 bindsym control+$mod+n exec --no-startup-id emacsclient -c -s GNUS_SERVER  -e '(switch-to-buffer (get-buffer-create "*Group*"))'

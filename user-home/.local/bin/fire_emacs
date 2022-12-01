@@ -1,19 +1,92 @@
-#! /bin/sh
+#! /bin/zsh -l
 
-CMD="emacs --daemon"
-CHK="emacsclient"
+CONDA_ENV=emacs
+PARSER_DEF+="nf=OPT_NO_FRAME -no-frame=OPT_NO_FRAME "
+PARSER_DEF+="wd=OPT_WITH_DAEMON -with-daemon=OPT_WITH_DAEMON "
+PARSER_DEF+="s:=OPT_SOCKET -socket:=OPT_SOCKET "
 
-[ ! -z "$1" ] && {
-  CMD="$CMD=$1"
-  CHK="$CHK -s $1"
+parse-opts () {
+
+  parse-opts-base $@
+
+  # Set default socket
+  OPT_SOCKET=${OPT_SOCKET[2]:-$(get-or-create-socket)}
+
 }
 
-CHK="$CHK -n -e '(message \"Hello\")'"
+parse-opts-base () {
+  zmodload zsh/zutil
+  zparseopts -D -E -F - ${=PARSER_DEF} || exit 1
 
-## debug
-# echo $CHK
-# echo $CMD
+  # remove first -- or -
+  end_opts=$@[(i)(--|-)]
+  set -- "${@[0,end_opts-1]}" "${@[end_opts+1,-1]}"
+}
 
-source ~/miniconda3/bin/activate emacs && \
-    sh -c "$CHK" || $CMD
+get-or-create-socket () {
+  _mktemp () {
+    mktemp -p /tmp/emacs${UID}
+  }
 
+  ls $(realpath ~/.emacs.d/socket) || {
+    rm ~/.emacs.d/socket
+    ln -s $(_mktemp) ~/.emacs.d/socket
+    ls $(realpath ~/.emacs.d/socket)
+  }
+}
+
+is-daemon () {
+
+  local SOCKET=${OPT_SOCKET}
+  local SUCCESS="[INFO    ] Checking for socket:${SOCKET} ...works"
+  local FAILURE="[WARNING ] Checking for socket:${SOCKET} ...FAILED"
+
+  {
+    local SEXP="(message \"Hello\")"
+    # echo "[DEBUG   ] SEXP:${SEXP}"
+    # echo "[INFO    ] Checking for socket:${SOCKET}"
+    emacsclient -s ${SOCKET} -n -e ${SEXP} >/dev/null && \
+      echo ${SUCCESS} || \
+      {echo ${FAILURE} ; return 1}
+      
+  } >&2
+
+}
+
+conda-activate () {
+  source ~/miniconda3/bin/activate ${CONDA_ENV}
+}
+
+run-daemon-may-be () {
+  [ ! -z ${OPT_WITH_DAEMON} ] && {
+    local SOCKET=${OPT_SOCKET}
+
+    echo "[INFO    ] Using socket: ${SOCKET}" >&2
+    conda-activate && {
+      
+      export NVM_DIR="$HOME/.nvm"
+      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+      emacs --daemon=${SOCKET}
+    }
+  }
+}
+
+create-frame-may-be () {
+  local SOCKET=${OPT_SOCKET}
+
+  # should be a valid exit if [ ! -z ${OPT_NO_FRAME} ]
+  [ ! -z ${OPT_NO_FRAME} ] || \
+    emacsclient -s ${SOCKET} -c
+}
+
+main() {
+
+  parse-opts $@
+
+  { is-daemon || run-daemon-may-be } \
+    && create-frame-may-be
+
+}
+
+main $@
