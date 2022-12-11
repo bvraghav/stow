@@ -5,12 +5,19 @@ PARSER_DEF+="nf=OPT_NO_FRAME -no-frame=OPT_NO_FRAME "
 PARSER_DEF+="wd=OPT_WITH_DAEMON -with-daemon=OPT_WITH_DAEMON "
 PARSER_DEF+="s:=OPT_SOCKET -socket:=OPT_SOCKET "
 
+err () {
+  echo ${=@} >&2
+}
+
 parse-opts () {
+  err "[INFO    ] Using Parser Def: ${PARSER_DEF}"
+  err "[INFO    ] Using args: ${@}"
 
   parse-opts-base $@
 
   # Set default socket
   OPT_SOCKET=${OPT_SOCKET[2]:-$(get-or-create-socket)}
+  err "[INFO    ] Using socket: ${OPT_SOCKET}"
 
 }
 
@@ -25,13 +32,28 @@ parse-opts-base () {
 
 get-or-create-socket () {
   _mktemp () {
-    mktemp -p /tmp/emacs${UID}
+    mktemp -p /tmp/emacs$(id -u)
   }
 
-  ls $(realpath ~/.emacs.d/socket) || {
+  err "[INFO    ] Defined _mktemp:" 
+  which _mktemp >&2
+
+  [ -S `realpath ~/.emacs.d/socket` ] || {
+    err -n "[DEBUG   ] Removing socket ~/.emacs.d/socket"
     rm ~/.emacs.d/socket
+    err " ...done"
+
+    err -n "[DEBUG   ] _mktemp: "                     \
+        "Creating with parent: /tmp/emacs$(id -u)"
+
     ln -s $(_mktemp) ~/.emacs.d/socket
-    ls $(realpath ~/.emacs.d/socket)
+
+    [ -S `realpath ~/.emacs.d/socket` ]                \
+      && err " ...done"                                \
+        || err " ...FAILED"
+
+  } && {
+    ls ~/.emacs.d/socket
   }
 }
 
@@ -41,15 +63,15 @@ is-daemon () {
   local SUCCESS="[INFO    ] Checking for socket:${SOCKET} ...works"
   local FAILURE="[WARNING ] Checking for socket:${SOCKET} ...FAILED"
 
-  {
-    local SEXP="(message \"Hello\")"
-    # echo "[DEBUG   ] SEXP:${SEXP}"
-    # echo "[INFO    ] Checking for socket:${SOCKET}"
-    emacsclient -s ${SOCKET} -n -e ${SEXP} >/dev/null && \
-      echo ${SUCCESS} || \
-      {echo ${FAILURE} ; return 1}
-      
-  } >&2
+  local SEXP="(message \"Hello\")"
+  # err "[DEBUG   ] SEXP:${SEXP}"
+  # err "[INFO    ] Checking for socket:${SOCKET}"
+  emacsclient -s ${SOCKET} -n -e ${SEXP} >/dev/null && {
+    err ${SUCCESS}
+  } || {
+    err ${FAILURE}
+    return 1
+  }
 
 }
 
@@ -61,7 +83,7 @@ run-daemon-may-be () {
   [ ! -z ${OPT_WITH_DAEMON} ] && {
     local SOCKET=${OPT_SOCKET}
 
-    echo "[INFO    ] Using socket: ${SOCKET}" >&2
+    err "[INFO    ] Using socket: ${SOCKET}"
     conda-activate && {
       
       export NVM_DIR="$HOME/.nvm"
@@ -76,7 +98,7 @@ create-frame-may-be () {
   local SOCKET=${OPT_SOCKET}
 
   # should be a valid exit if [ ! -z ${OPT_NO_FRAME} ]
-  [ ! -z ${OPT_NO_FRAME} ] || \
+  [ ! -z ${OPT_NO_FRAME} ] ||                            \
     emacsclient -s ${SOCKET} -c
 }
 
@@ -84,7 +106,7 @@ main() {
 
   parse-opts $@
 
-  { is-daemon || run-daemon-may-be } \
+  { is-daemon || run-daemon-may-be }                     \
     && create-frame-may-be
 
 }
