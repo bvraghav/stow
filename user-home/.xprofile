@@ -41,8 +41,6 @@ startup() {
     # fire_emacs GNUS_SERVER
   } > /dev/null 2>&1 &
 
-  export TERMINAL=tmux
-
   # zotero &
   # slack &
   # watch-servers &
@@ -71,6 +69,14 @@ startup() {
   ~/.fehbg
 
   nm-applet &
+  
+  gtk-launch huiontablet &
+
+  {
+    xdg-user-dirs-update --set DOCUMENTS  ~/docs
+  } &
+
+
 }
 
 
@@ -145,6 +151,15 @@ fi
   in_path $HOME/.local/lib/node_modules $NODE_PATH || 
     export NODE_PATH="$HOME/.local/lib/node_modules:$NODE_PATH"
 }
+
+## XDG config
+## -----------------------------------
+export XDG_CONFIG_HOME=${HOME}/.config
+
+## TERMINAL
+## -----------------------------------
+
+export TERMINAL=tmux
 
 # ## proxy setup
 # ## -----------------------------------
