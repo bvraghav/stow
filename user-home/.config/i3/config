@@ -318,8 +318,9 @@ bindsym $mod+q exec dm-tool switch-to-greeter
 bindsym $mod+grave exec systemctl suspend
 
 # Volume bindings
-bindsym $mod+bracketleft exec pactl set-sink-volume $(pvsink) -5%
-bindsym $mod+bracketright exec pactl set-sink-volume $(pvsink) +5%
+bindsym $mod+bracketleft exec pactl set-sink-volume @DEFAULT_SINK@ -3%
+bindsym $mod+bracketright exec pactl set-sink-volume @DEFAULT_SINK@ +3%
+bindsym $mod+Shift+m exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 # Calendar
 bindsym $mod+Control+c exec uxterm -e calcurse
