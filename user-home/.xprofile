@@ -76,7 +76,7 @@ startup() {
     xdg-user-dirs-update --set DOCUMENTS  ~/docs
   } &
 
-
+  make -C ${XDG_CONFIG_HOME}/i3 &
 }
 
 

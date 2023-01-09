@@ -369,13 +369,24 @@ bindsym $mod+Control+d mode "display_configure"
 
 ## Screen capture mode
 ## ----------------------------------------------------
-set $screen_capture_display emacs -Q --kill --eval \
-    '(progn (load-file "/home/bvr/.elisp/screen-capture.el") (screen-capture "display" t))'
-set $screen_capture_active  /home/bvr/.local/bin/screen-capture active
-set $screen_capture_window  emacs -Q --kill --eval \
-    '(progn (load-file "/home/bvr/.elisp/screen-capture.el") (screen-capture "window" t))'
-set $screen_capture_patch   emacs -Q --kill --eval \
-    '(progn (load-file "/home/bvr/.elisp/screen-capture.el") (screen-capture "patch" t))'
+# set $screen_capture_display emacs -Q --kill --eval \
+#     '(progn (load-file "/home/bvr/.elisp/screen-capture.el") (screen-capture "complete" t))'
+# set $screen_capture_display EMACSLOADPATH=~/.elisp: \
+#     emacs -q -batch -l screen-capture.el -eval \
+#     '(screen-capture "complete" t))'
+# set $screen_capture_window  emacs -Q --kill --eval \
+#     '(progn (load-file "/home/bvr/.elisp/screen-capture.el") (screen-capture "window" t))'
+# set $screen_capture_patch   emacs -Q --kill --eval \
+#     '(progn (load-file "/home/bvr/.elisp/screen-capture.el") (screen-capture "patch" t))'
+set $screen_capture_display screen-capture d
+set $screen_capture_active screen-capture a `xdotool getactivewindow getwindowname`
+set $screen_capture_window EMACSLOADPATH=~/.elisp: \
+    emacs -q -batch -l screen-capture.el -eval \
+    '(screen-capture "window" t))'
+set $screen_capture_window EMACSLOADPATH=~/.elisp: \
+    emacs -q -batch -l screen-capture.el -eval \
+    '(screen-capture "patch" t))'
+
 
 set $screen_capture_mode Screen Capture: ]:dest d:display a:active w,s:window b,p:patch
 mode screen_capture_dest {
@@ -391,10 +402,10 @@ mode screen_capture_dest {
 }
 mode "$screen_capture_mode" {
      bindsym bracketright mode "screen_capture_dest"
-     bindsym d exec --no-startup-id $screen_capture_display ; mode "default"
-     bindsym a exec --no-startup-id $screen_capture_active  ; mode "default"
+     bindsym d exec $screen_capture_display ; mode "default"
+     bindsym a exec $screen_capture_active  ; mode "default"
      bindsym w exec --no-startup-id $screen_capture_window  ; mode "default"
-     bindsym s exec --no-startup-id $screen_capture_window  ; mode "default"
+     bindsym s exec $screen_capture_window  ; mode "default"
      bindsym b exec --no-startup-id $screen_capture_patch   ; mode "default"
      bindsym p exec --no-startup-id i3-msg 'exec screen-capture patch'
 
@@ -403,6 +414,6 @@ mode "$screen_capture_mode" {
      bindsym Escape mode "default"
 }
 bindsym $mod+Print mode "$screen_capture_mode"
-bindsym Print exec /home/bvr/.local/bin/screen-capture active
+bindsym Print exec screen-capture d
 # set $screen_capture_patch emacsclient -c -e '(screen-capture "patch")'
 # bindsym Print exec $screen_capture_patch

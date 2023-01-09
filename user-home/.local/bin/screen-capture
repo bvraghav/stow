@@ -38,9 +38,11 @@ capture_complete () {
 }
 
 capture_active () {
-  gm import -window \
-     $(xdotool getactivewindow getwindowname) \
-     png:- \
+  local window=${1}
+
+  gm import            \
+     -window ${window} \
+     png:-             \
     | xclip -selection clipboard -t image/png
 }
 
@@ -88,16 +90,17 @@ save_to_dest () {
 # Main
 function () {
   local choice=${1:-window}
+  local window=${2:-$(xdotool getactivewindow getwindowname)}
 
   echo "Capturing $choice"
 
   bootstrap \
     && {
     case $choice in
-      d|complete) capture_complete ;;
-      a|active)   capture_active   ;;
-      w|s|window) capture_window   ;;
-      b|p|patch)  capture_patch    ;;
+      d|complete) capture_complete         ;;
+      a|active)   capture_active ${window} ;;
+      w|s|window) capture_window           ;;
+      b|p|patch)  capture_patch            ;;
     esac
   } # && save_to_dest
 
