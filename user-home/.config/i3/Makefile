@@ -39,8 +39,20 @@ NOUNS		+= floating height width stacking tabbed
 
 nouns		 = $(subst __,${ },$(subst ${ },\|,${NOUNS}))
 
+SID_RE		+= \( --no-startup-id\)\?
+ARGS_RE		+= \(\([^\"]\+\|\"[^\"]*\"\)*\)
+CNAME_RE	+= \([^ ]\+\)
+CMD_RE		+= \"\?${CNAME_RE}${ARGS_RE}\"\?
+EXEC_RE		+= exec${SID_RE} ${CMD_RE}
+
+KW_HTML		+= $(call as,verb exec,exec)
+CNAME_HTML	+= <span class="name">\2</span>
+CMD_HTML	+= <kbd class="prog">${CNAME_HTML} \3</kbd>
+
+EXEC_HTML	+= ${KW_HTML} ${CMD_HTML}
+
 EXEC_SCRIPT	+= /exec /{
-EXEC_SCRIPT	+= s,exec\( --no-startup-id\)\? \([^ ]\+\)\(.*\)$$,$(call as,verb exec,exec) <kbd class="prog"><span class="name">\2</span> \3</kbd>,;
+EXEC_SCRIPT	+= s,${EXEC_RE},${EXEC_HTML},;
 EXEC_SCRIPT	+= t };
 
 
