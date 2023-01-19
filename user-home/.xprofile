@@ -13,13 +13,55 @@ find_fonts() {
     | sed 's/,$//g'
 }
 
+enable_touchpad_dell () {
+
+  # Enable touch pad
+  # ... on Dell Laptop
+  # https://wiki.archlinux.org/title/Libinput
+  xinput set-prop                              \
+         'AlpsPS/2 ALPS DualPoint TouchPad'    \
+         --type=int 'libinput Tapping Enabled' \
+         1
+
+  # Stick acceleration control
+  xinput set-prop                              \
+         'AlpsPS/2 ALPS DualPoint Stick'       \
+         --type=float 'libinput Accel Speed'   \
+         -0.2
+}
+
+enable_touchpad_thinkpad () {
+
+  # Enable touch pad tapping
+  # ... on Thinkpad
+  # https://wiki.archlinux.org/title/Libinput
+  xinput set-prop                              \
+         'ELAN0678:00 04F3:3195 Touchpad'      \
+         --type=int 'libinput Tapping Enabled' \
+         1
+
+  # Stick acceleration control
+  xinput set-prop                              \
+         'TPPS/2 Elan TrackPoint'              \
+         --type=float 'libinput Accel Speed'   \
+         -0.2
+}
+
+enable_touchpad () {
+  case ${1} in
+    dell) enable_touchpad_dell ;;
+    thinkpad) enable_touchpad_thinkpad ;;
+    *) echo "Not Implemented enable_touchpad for ${1}" ;;
+  esac
+}
+
 startup() {
   ~/.screenlayout/vga-vert.sh
 
   # https://wiki.archlinux.org/title/Xorg/Keyboard_configuration
   setxkbmap gb
 
-  redshift -l 50:0 -b 0.6:0.4 -t 3500:2500 -o  &
+  redshift -x && redshift -l 50:0 -b 0.6:0.4 -t 3500:2500 -o  &
   # systemctl start --user pulseaudio &
   xset b 10 1 10
   xset -dpms
@@ -52,19 +94,7 @@ startup() {
 	 --type=float "Coordinate Transformation Matrix" \
 	 0.68085106383 0 0 0 0.675 0 0 0 1
 
-  # Enable touch pad
-  # ... on Dell Laptop
-  # https://wiki.archlinux.org/title/Libinput
-  xinput set-prop                              \
-         'AlpsPS/2 ALPS DualPoint TouchPad'    \
-         --type=int 'libinput Tapping Enabled' \
-         1
-
-  # Stick acceleration control
-  xinput set-prop                              \
-         'AlpsPS/2 ALPS DualPoint Stick'       \
-         --type=float 'libinput Accel Speed'   \
-         -0.2
+  enable_touchpad thinkpad
 
   ~/.fehbg
 
