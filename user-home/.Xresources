@@ -49,10 +49,12 @@ Xft.hinting: 1
 Xft.hintstyle: hintslight
 Xft.antialias: 1
 Xft.rgba: rgb
-XTerm.vt100.faceName: Liberation Mono:size=10:antialias=true
-UXTerm.vt100.faceName: Liberation Mono:size=10:antialias=true
+XTerm.vt100.faceName: Cascadia Code:size=10:antialias=true
+UXTerm.vt100.faceName: Cascadia Code:size=10:antialias=true
 ! XTerm.vt100.font: 8x18
 
+! HiDPI
+Xft.dpi: 120
 
 
 !!!! --------------------------------------------------
