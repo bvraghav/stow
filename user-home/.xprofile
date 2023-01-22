@@ -61,7 +61,8 @@ startup() {
   # https://wiki.archlinux.org/title/Xorg/Keyboard_configuration
   setxkbmap gb
 
-  redshift -x && redshift -l 50:0 -b 0.6:0.4 -t 3500:2500 -o  &
+  # THINKPAD
+  redshift -P -l 50:0 -b 0.75:0.55 -t 4500:3500 -o  &
   # systemctl start --user pulseaudio &
   xset b 10 1 10
   xset -dpms
