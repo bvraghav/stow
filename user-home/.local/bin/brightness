@@ -1,0 +1,120 @@
+#! /usr/bin/make -f
+
+SHELL		:= /usr/bin/zsh
+
+DPY		:= $(shell 			\
+  xrandr | sed '/ connected/!d; s, .*,,'	\
+)
+
+cur		= $(shell			\
+  xrandr --verbose 				\
+  | sed -n '/ connected/,/disconnected/p'	\
+  | sed -n '/brightness/Ip'			\
+  | cut -d: -f2					\
+)
+
+gamma		:= $(shell 			\
+  xrandr --verbose 				\
+  | sed -n '/ connected/,/disconnected/p'	\
+  | sed -n '/gamma/Ip'				\
+  | cut -d: -f2-				\
+)
+
+SED_REDSHIFT	:= /redsh/!d; 
+SED_REDSHIFT	+= s,^.*\(;\|\&\&\)\| *\& *$$,,g;
+SED_REDSHIFT	+= s,-b *[^ ]\+,,;
+SED_REDSHIFT	+=
+SED_REDSHIFT	+=
+SED_REDSHIFT	+=
+redshift	:= $(shell			\
+  [ ! -f ~/.xprofile ] || {			\
+    cat ~/.xprofile				\
+    | sed '${SED_REDSHIFT}'			\
+  }						\
+)
+
+rel		= $(shell 			\
+  echo ${VALUE} | grep -o '^[+-]'		\
+)
+
+ABSVAL		:= $(shell			\
+  echo ${VALUE} 				\
+  | sed 's,^[+\-]\?\([^%]*\)%\?$$,\1,'		\
+)
+
+CMD_SCRIPT	+= [ -z ${VALUE} ] ||
+CMD_SCRIPT	+= case "${VALUE}" in
+CMD_SCRIPT	+=   +*) echo inc ;;
+CMD_SCRIPT	+=   -*) echo dec ;;
+CMD_SCRIPT	+=   *) echo set ;;
+CMD_SCRIPT	+= esac
+cmd		= $(shell ${CMD_SCRIPT})
+
+_VAL_0		:= $(shell \
+  if { echo ${VALUE} | grep -q '%$$' } ; then 	\
+    echo $$(( ${ABSVAL} * $(cur) / 100 )); else	\
+  echo ${VALUE} ; fi				\
+)
+_VAL_1		:=  $(shell			\
+  if [[ $(cmd) == "set" ]] ; then		\
+    echo ${_VAL_0} ; else			\
+  echo $$(( $(cur) $(rel) ${_VAL_0} )) ; fi	\
+)
+_VAL_2		:= $(shell			\
+  [[ "${_VAL_1}" < "0" ]] && echo 0		\
+  || { [[ "1" < "${_VAL_1}" ]] && echo 1 }	\
+  || echo ${_VAL_1}				\
+)
+
+VAL		:= ${_VAL_2}
+
+all : $(or $(cmd),help)
+	@echo "Brightness Now: $(cur)"
+
+log :
+	@echo "Running Makefile"
+	@echo "DEBUG: cmd:$(cmd)"
+	@echo "DEBUG: cur:$(cur)"
+	@echo "DEBUG: ABSVAL:${ABSVAL}"
+	@echo "DEBUG: _VAL_0:$(_VAL_0)"
+	@echo "DEBUG: _VAL_1:$(_VAL_1)"
+	@echo "DEBUG: _VAL_2:$(_VAL_2)"
+
+ifeq ($(shell (( ${VAL} < 0.1 )) && echo 1),1)
+inc dec : log
+	$(warning val:"${VAL}" < "0.1". Imperceptible change.)
+	@echo "Nothing to do. Exiting"
+
+set : log
+	$(warning val:"${VAL}" < "0.1". Switching off brightness)
+	xrandr --output ${DPY} --brightness 0
+else ifeq ($(shell \
+  (( abs($(cur) - ${VAL}) 0.001 )) && \
+echo 1),1)
+inc dec set : log
+	@echo "Brightness cur:$(cur) is same as val:${VAL}"
+	@echo "Nothing to do. Exiting."
+else
+inc : log set
+	@echo "Incremented by ${VALUE}"
+
+dec : log set
+	@echo "Decremented by ${VALUE}"
+
+set : log
+	@echo "Setting to $(VAL)"
+	@echo 
+	redshift -$(redshift) -b "${VAL}:${VAL}"
+	@echo
+endif
+
+
+help :
+	@echo Usage:
+	@echo 
+	@echo "${MAKEFILE_LIST} VALUE=[+|-]<VAL>[%]"
+	@echo "  Set the monitor brightness value to <VAL>"
+	@echo "  Suffix <VAL> with '%' to scale the current brightness."
+	@echo "  Prefix <VAL> with '+' to increment or '-' to decrement"
+	@echo "  with respect to current brightness."
+
