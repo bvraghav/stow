@@ -65,6 +65,9 @@ alias ls='ls --color=auto -h '
 alias -g emacs-init='~/.emacs.d/init.el'
 
 
+## Load math
+## -----------------------------------
+zmodload zsh/mathfunc
 
 # ## Env
 # ## -----------------------------------
