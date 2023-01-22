@@ -50,13 +50,14 @@ CMD_SCRIPT	+=   *) echo set ;;
 CMD_SCRIPT	+= esac
 cmd		= $(shell ${CMD_SCRIPT})
 
+ifneq ($(cmd),)
 _VAL_0		:= $(shell \
   if { echo ${VALUE} | grep -q '%$$' } ; then 	\
     echo $$(( ${ABSVAL} * $(cur) / 100 )); else	\
   echo ${VALUE} ; fi				\
 )
 _VAL_1		:=  $(shell			\
-  if [[ $(cmd) == "set" ]] ; then		\
+  if [[ "$(cmd)" == "set" ]] ; then		\
     echo ${_VAL_0} ; else			\
   echo $$(( $(cur) $(rel) ${_VAL_0} )) ; fi	\
 )
@@ -67,6 +68,7 @@ _VAL_2		:= $(shell			\
 )
 
 VAL		:= ${_VAL_2}
+endif
 
 all : $(or $(cmd),help)
 	@echo "Brightness Now: $(cur)"
@@ -88,9 +90,7 @@ inc dec : log
 set : log
 	$(warning val:"${VAL}" < "0.1". Switching off brightness)
 	xrandr --output ${DPY} --brightness 0
-else ifeq ($(shell \
-  (( abs($(cur) - ${VAL}) 0.001 )) && \
-echo 1),1)
+else ifeq (1,$(shell (( abs($(cur) - ${VAL}) < 0.001 )) && echo 1))
 inc dec set : log
 	@echo "Brightness cur:$(cur) is same as val:${VAL}"
 	@echo "Nothing to do. Exiting."
