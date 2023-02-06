@@ -82,7 +82,7 @@ log :
 	@echo "DEBUG: _VAL_1:$(_VAL_1)"
 	@echo "DEBUG: _VAL_2:$(_VAL_2)"
 
-ifeq ($(shell (( ${VAL} < 0.1 )) && echo 1),1)
+ifeq ($(shell { [[ -z "${VAL}" ]] || (( ${VAL} < 0.1 )) } && echo 1),1)
 inc dec : log
 	$(warning val:"${VAL}" < "0.1". Imperceptible change.)
 	@echo "Nothing to do. Exiting"
