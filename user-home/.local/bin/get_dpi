@@ -1,0 +1,14 @@
+#! /usr/bin/python
+
+from subprocess import check_output
+
+xrandr = check_output('xrandr').decode()
+
+line = next(filter(lambda s: (" connected" in s), xrandr.split('\n'))).split()
+
+sx = int(line[3].split("x")[0])            
+sy = int(line[3].split("x")[1].split("+")[0])
+
+lx, ly = int(line[-3][:-2]), int(line[-1][:-2])
+
+print(0.5*(25.4*sx/lx+ 25.4*sy/ly))
