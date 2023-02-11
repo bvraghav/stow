@@ -1,0 +1,191 @@
+#! /usr/bin/env python
+
+from dataclasses import dataclass
+import os
+from subprocess import check_output, call
+import datetime as Dt
+from datetime import timedelta as Td
+from enum import Enum
+import itertools as It
+import functools as Ft
+import time
+
+## ----------------------------------------------------
+## Configure THRESH LEVELS
+## ----------------------------------------------------
+'''
+List of thresh-log pairs
+
+THRESH: num remaining seconds for battery
+LOG: log-level if remaining is less than thresh
+'''
+THRESH_LOG_PAIR = (
+  (60  , "error"  ),
+  (300 , "error"  ),
+  (900 , "warning"),
+  (1800, "warning"),
+  (3600, "warning"),
+  (0xfffffff, "none"),          # infinity
+)
+AC_UPDATE_FREQ = 60                # once a minute
+                                   # (when on AC)
+BAT_UPDATE_FREQ = 300              # every five minutes
+                                   # (when on battery)
+## ----------------------------------------------------
+
+
+class NagLevel(Enum) :
+  WARNING = 'warning'
+  ERROR   = 'error'
+  NONE    = 'none'
+
+@dataclass
+class NagData :
+  msg: str
+  level: NagLevel
+  font:str =  f'pango:Cascadia Code 16'
+  cmd_fmt:str = 'i3-nagbar -p -m {msg} -f {font} -t {level}'
+
+class NagManager(NagData) :
+  def __call__(self) :
+    call([
+      s.format(
+        msg = self.msg,
+        font=self.font,
+        level=self.level.value
+      )
+      for s in self.cmd_fmt.split()
+    ])
+
+
+class BatMode(Enum) :
+  DISCHARGING = 'discharging'
+  CHARGING = 'charging'
+
+@dataclass
+class BatStatus :
+  bat_id : int
+  mode : BatMode
+  percent : int
+  rem_time : int
+
+
+class BatteryManager(BatStatus) :
+  def _setup(self, **props) :
+    list(It.starmap(
+      Ft.partial(setattr, self),
+      props.items()
+    ))
+
+  @property
+  def crit_thresh(self) :
+    t, _ =  next(reversed(list(It.takewhile(
+      lambda p: p[1]=='error',
+      THRESH_LOG_PAIR
+    ))))
+
+    return t
+
+  @property
+  def flag(self) :
+    _flag = ''
+    if self.mode==BatMode.DISCHARGING and \
+       self.rem_time < self.crit_thresh :
+      _flag = '[CRITICAL] '
+
+    return _flag
+
+  @property
+  def nag_message(self) :
+    return (
+      f'{self.flag}'
+      f'Battery low: {self.percent}% | '
+      f'{Td(seconds=self.rem_time)} remaining'
+    )
+
+  @property
+  def nag_level(self) :
+    _, l = next(It.dropwhile(
+      lambda p: (p[0] < self.rem_time),
+      THRESH_LOG_PAIR
+    ))
+
+    return NagLevel(l)
+
+
+  def loop(self) :
+    if self.mode != BatMode.DISCHARGING :
+      return 
+
+    if self.nag_level == NagLevel.NONE :
+      return
+
+    nag = NagManager(self.nag_message, self.nag_level)
+    nag()
+
+
+  def sleep(self) :
+    time.sleep(
+      AC_UPDATE_FREQ if self.mode == BatMode.CHARGING
+      else BAT_UPDATE_FREQ
+    )
+
+  def __call__(self) :
+    while True :
+      self._setup(**getAcpiStatus())
+      self.loop()
+      self.sleep()
+    
+    
+    
+    
+
+  
+
+
+
+def t2s(isotime) :
+  return int(
+    Dt.time.fromisoformat(isotime)
+    .strftime('%s')
+  )
+
+def t2remsec(isotime) :
+  base = '00:00:00'
+  return t2s(isotime) - t2s(base)
+
+def getAcpiStatus() :
+  bat_status = check_output(["acpi", "-b"]).decode()
+  bat_status = next(filter(
+    lambda s: s.lower().startswith('battery'),
+    bat_status.split('\n')
+  ))
+  bat_status = bat_status.replace(':',',',1)
+  (
+    bat_name,
+    mode,
+    percent,
+    rem_time,
+  ) = map(
+    lambda s: s.strip(),
+    bat_status.split(',')
+  )
+
+  bat_id = int(bat_name.split(' ')[-1])
+  mode = BatMode(mode.lower())
+  percent = int(percent.rstrip('%'))
+  rem_time = t2remsec(next(iter(rem_time.split())))
+
+  return dict(
+    bat_id = bat_id,
+    mode = mode,
+    percent = percent,
+    rem_time = rem_time,
+  )
+
+
+if __name__ == '__main__' :
+
+  print (getAcpiStatus())
+
+  BatteryManager(**getAcpiStatus())()

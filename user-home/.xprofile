@@ -56,7 +56,7 @@ enable_touchpad () {
 }
 
 startup() {
-  ~/.screenlayout/vga-vert.sh
+  # ~/.screenlayout/vga-vert.sh
 
   # https://wiki.archlinux.org/title/Xorg/Keyboard_configuration
   setxkbmap gb
@@ -108,6 +108,8 @@ startup() {
   } &
 
   make -C ${XDG_CONFIG_HOME}/i3 &
+
+  battery-warn &
 }
 
 
