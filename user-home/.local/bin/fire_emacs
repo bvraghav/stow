@@ -35,8 +35,8 @@ get-or-create-socket () {
     mktemp -p /tmp/emacs$(id -u)
   }
 
-  err "[INFO    ] Defined _mktemp:" 
-  which _mktemp >&2
+  # err "[INFO    ] Defined _mktemp:" 
+  # which _mktemp >&2
 
   [ -S `realpath ~/.emacs.d/socket` ] || {
     err -n "[DEBUG   ] Removing socket ~/.emacs.d/socket"
