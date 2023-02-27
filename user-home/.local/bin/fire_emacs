@@ -98,8 +98,10 @@ create-frame-may-be () {
   local SOCKET=${OPT_SOCKET}
 
   # should be a valid exit if [ ! -z ${OPT_NO_FRAME} ]
-  [ ! -z ${OPT_NO_FRAME} ] ||                            \
-    emacsclient -s ${SOCKET} -c
+  [ ! -z ${OPT_NO_FRAME} ] || {
+
+    emacsclient -s ${SOCKET} -c ${@}
+  }
 }
 
 main() {
@@ -107,7 +109,7 @@ main() {
   parse-opts $@
 
   { is-daemon || run-daemon-may-be }                     \
-    && create-frame-may-be
+    && create-frame-may-be $@
 
 }
 
