@@ -22,7 +22,7 @@ LOG: log-level if remaining is less than thresh
 THRESH_LOG_PAIR = (
   (60  , "error"  ),
   (300 , "error"  ),
-  (900 , "warning"),
+  (900 , "error"  ),
   (1800, "warning"),
   (3600, "warning"),
   (0xfffffff, "none"),          # infinity
@@ -120,6 +120,7 @@ class BatteryManager(BatStatus) :
     if self.nag_level == NagLevel.NONE :
       return
 
+    print(getAcpiStatus())
     nag = NagManager(self.nag_message, self.nag_level)
     nag()
 
