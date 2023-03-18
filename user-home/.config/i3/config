@@ -268,7 +268,7 @@ bindsym $mod+z exec --no-startup-id fire_emacs
 bindsym control+$mod+n exec --no-startup-id emacsclient -c -s GNUS_SERVER  -e '(switch-to-buffer (get-buffer-create "*Group*"))'
 
 # org agenda
-bindsym $mod+o exec --no-startup-id emacsclient -c -e '(progn (org-todo-list) (delete-other-windows))'
+bindsym $mod+o exec --no-startup-id fire_emacs -- -e '(progn (org-todo-list) (delete-other-windows))'
 
 # pdf viewer
 bindsym $mod+x exec zathura
@@ -282,8 +282,8 @@ bindsym $mod+g exec --no-startup-id gimp
 # blender
 bindsym $mod+b exec blender
 
-# w3m
-bindsym $mod+semicolon exec --no-startup-id emacsclient -c -e '(w3m)'
+# # w3m
+# bindsym $mod+semicolon exec --no-startup-id fire_emacs -e '(w3m)'
 
 # apostrophe for noproxy
 bindsym $mod+apostrophe exec noproxy_x
@@ -436,6 +436,10 @@ mode "$screen_capture_mode" {
      bindsym Escape mode "default"
 }
 bindsym $mod+Print mode "$screen_capture_mode"
-bindsym Print exec screen-capture d
-# set $screen_capture_patch emacsclient -c -e '(screen-capture "patch")'
-# bindsym Print exec $screen_capture_patch
+# bindsym Print exec screen-capture d
+set $screen_capture_patch fire_emacs -e '(screen-capture "patch")'
+bindsym Print exec $screen_capture_patch
+
+# Local Variables:
+# eval: (face-remap-add-relative 'default :height 1.5)
+# End:
