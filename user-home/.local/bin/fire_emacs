@@ -79,6 +79,10 @@ conda-activate () {
   source ~/miniconda3/bin/activate ${CONDA_ENV}
 }
 
+get-nvm-dir () {
+  
+}
+
 run-daemon-may-be () {
   [ ! -z ${OPT_WITH_DAEMON} ] && {
     local SOCKET=${OPT_SOCKET}
@@ -86,7 +90,7 @@ run-daemon-may-be () {
     err "[INFO    ] Using socket: ${SOCKET}"
     conda-activate && {
       
-      export NVM_DIR="$HOME/.nvm"
+      export NVM_DIR="$HOME/.config/nvm"
       [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
       emacs --daemon=${SOCKET}
@@ -99,7 +103,13 @@ create-frame-may-be () {
 
   # should be a valid exit if [ ! -z ${OPT_NO_FRAME} ]
   [ ! -z ${OPT_NO_FRAME} ] || {
+  
 
+    # remove first --
+    end_opts=$@[(i)(--)]
+    set -- "${@[0,end_opts-1]}" "${@[end_opts+1,-1]}"
+    err "[INFO    ] Creating frame using args: ${@}"
+    
     emacsclient -s ${SOCKET} -c ${@}
   }
 }
