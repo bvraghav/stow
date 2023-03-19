@@ -272,7 +272,7 @@ bindsym $mod+z exec --no-startup-id fire_emacs
 bindsym control+$mod+n exec --no-startup-id emacsclient -c -s GNUS_SERVER  -e '(switch-to-buffer (get-buffer-create "*Group*"))'
 
 # org agenda
-bindsym $mod+o exec --no-startup-id fire_emacs -- -e '(progn (org-todo-list) (delete-other-windows))'
+bindsym $mod+o exec --no-startup-id fire_emacs -- -e '(progn (org-todo-list "TODO") (delete-other-windows))'
 
 # pdf viewer
 bindsym $mod+x exec zathura
