@@ -1,0 +1,14 @@
+[Desktop Entry]
+Name=Jupyter Notebook in Chromium Browser
+Name[en_US]=Jupyter Notebook in Chromium Browser
+GenericName=Jupyter Notebook in Chromium Browser
+GenericName[en_US]=Jupyter Notebook in Chromium Browser
+Comment=Jupyter Notebook in Chromium Browser
+Exec=zsh -c 'chromium --user-data-dir=${HOME}/.config/chromium-J --incognito --new-window %U'
+Terminal=false
+Type=Application
+Icon=chromium
+StartupNotify=true
+Categories=Network;WebBrowser;
+MimeType=application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/http;x-scheme-handler/https;
+NoDisplay=false

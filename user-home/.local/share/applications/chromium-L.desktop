@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=Leetcode as App in Chromium Web Browser
+Name[en_US]=Leetcode as App in Chromium Web Browser
+GenericName=Leetcode as App in Chromium Web Browser
+GenericName[en_US]=Leetcode as App in Chromium Web Browser
+Comment=Leetcode as App in Chromium Web Browser
+Exec=zsh -c 'chromium --user-data-dir=${HOME}/.config/chromium-L --password-store=gnome --app="https://leetcode.com/"'
+Path=
+Terminal=false
+Type=Application
+Icon=chromium
+StartupNotify=true
+Categories=Network;WebBrowser;
+MimeType=application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/http;x-scheme-handler/https;
+NoDisplay=true

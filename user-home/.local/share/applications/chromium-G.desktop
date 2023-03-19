@@ -1,0 +1,20 @@
+[Desktop Entry]
+Name=Chromium Google App
+Name[en_US]=Chromium Google App
+GenericName=Google App in Web Browser
+GenericName[en_US]=Google App in Web Browser
+Comment=Google App in Web Browser
+Exec=zsh -c 'chromium --user-data-dir=${HOME}/.config/chromium-G --password-store=gnome --app="https://www.google.com/"'
+Path=
+Terminal=false
+Type=Application
+Icon=chromium
+StartupNotify=true
+Categories=Network;WebBrowser;
+MimeType=application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/http;x-scheme-handler/https;
+NoDisplay=true
+Actions=new-window
+
+[Desktop Action new-window]
+Name=New Window
+Exec=zsh -c 'chromium --user-data-dir="~/.config/chromium-G" --password-store=gnome --new-window %U'

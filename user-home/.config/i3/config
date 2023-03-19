@@ -244,13 +244,17 @@ font pango:$font 11
 bindsym $mod+Shift+Delete exit
 
 # browser
-bindsym control+$mod+p exec chromium --user-data-dir=${HOME}/.config/chromium-P --incognito --new-window
-bindsym control+$mod+g exec chromium --user-data-dir=${HOME}/.config/chromium-G --app="https://google.com" --password-store=gnome
-bindsym control+$mod+m exec chromium --user-data-dir=${HOME}/.config/chromium-M --app="https://outlook.office.com/mail" --password-store=gnome
-bindsym control+$mod+w exec chromium --user-data-dir=${HOME}/.config/chromium-W --app="https://web.whatsapp.com/" --password-store=gnome
-bindsym control+$mod+l exec chromium --user-data-dir=${HOME}/.config/chromium-L --app="https://leetcode.com/" --password-store=gnome
-bindsym control+$mod+j exec chromium --user-data-dir=${HOME}/.config/chromium-J --incognito --new-window
-bindsym $mod+enter exec chromium --user-data-dir=${HOME}/.config/chromium-D --incognito --new-window
+# bindsym control+$mod+p exec chromium --user-data-dir=${HOME}/.config/chromium-P --incognito --new-window
+bindsym control+$mod+p exec gtk-launch chromium-P
+# bindsym control+$mod+g exec chromium --user-data-dir=${HOME}/.config/chromium-G --app="https://google.com" --password-store=gnome
+bindsym control+$mod+g exec gtk-launch chromium-G
+# bindsym control+$mod+m exec chromium --user-data-dir=${HOME}/.config/chromium-M --app="https://outlook.office.com/mail" --password-store=gnome
+bindsym control+$mod+m exec gtk-launch chromium-M
+# bindsym control+$mod+w exec chromium --user-data-dir=${HOME}/.config/chromium-W --app="https://web.whatsapp.com/" --password-store=gnome
+bindsym control+$mod+w exec gtk-launch chromium-W
+# bindsym control+$mod+j exec chromium --user-data-dir=${HOME}/.config/chromium-J --incognito --new-window
+bindsym control+$mod+j exec gtk-launch chromium-J
+bindsym control+$mod+l exec gtk-launch chromium-L
 
 
 # file-manager
