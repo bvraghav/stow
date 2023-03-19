@@ -27,3 +27,8 @@ However, for some reason, if at all a system install of
 node is required, and there exists a need for defining
 a global prefix directory so that `npm install -g`
 works, copy the config from [`.npmrc` here](.npmrc)
+
+4. **Setting Default Desktop**
+```sh
+xdg-settings set default-web-browser chromium-P.desktop
+```
