@@ -441,5 +441,5 @@ set $screen_capture_patch fire_emacs -e '(screen-capture "patch")'
 bindsym Print exec $screen_capture_patch
 
 # Local Variables:
-# eval: (face-remap-add-relative 'default :height 1.5)
+# eval: (face-remap-add-relative 'default :height 1.25 :weight 'extralight)
 # End:
