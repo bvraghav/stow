@@ -10,5 +10,5 @@ Type=Application
 Icon=chromium
 StartupNotify=true
 Categories=Network;WebBrowser;
-MimeType=application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/http;x-scheme-handler/https;
+MimeType=application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/about;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/unknown;
 NoDisplay=false

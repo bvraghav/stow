@@ -1,7 +1,11 @@
 [Default Applications]
 application/pdf=org.pwmt.zathura.desktop
 application/x-pdf=org.pwmt.zathura.desktop
-x-scheme-handler/mailto=chromium.desktop
+x-scheme-handler/http=chromium-P.desktop
+x-scheme-handler/https=chromium-P.desktop
+x-scheme-handler/about=chromium-P.desktop
+x-scheme-handler/unknown=chromium-P.desktop
+x-scheme-handler/mailto=chromium-P.desktop
 x-scheme-handler/msteams=teams.desktop
 image/bmp=feh.desktop
 image/gif=feh.desktop

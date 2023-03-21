@@ -1,0 +1,3 @@
+#! /usr/bin/zsh -l
+
+fire_emacs -- -e '(progn (org-tags-view t "TODO=\"TODO\"\|TODO=\"PROCESSING\"") (delete-other-windows))'
