@@ -1,0 +1,3 @@
+#! /usr/bin/zsh
+
+chromium --user-data-dir=${HOME}/.config/chromium-M --password-store=gnome --app="https://outlook.office.com/mail/"

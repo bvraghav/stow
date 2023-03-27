@@ -4,7 +4,7 @@ Name[en_US]=Leetcode as App in Chromium Web Browser
 GenericName=Leetcode as App in Chromium Web Browser
 GenericName[en_US]=Leetcode as App in Chromium Web Browser
 Comment=Leetcode as App in Chromium Web Browser
-Exec=zsh -c 'chromium --user-data-dir=${HOME}/.config/chromium-L --password-store=gnome --app="https://leetcode.com/"'
+Exec=chromium-L
 Path=
 Terminal=false
 Type=Application

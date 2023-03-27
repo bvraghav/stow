@@ -4,7 +4,7 @@ Name[en_US]=Chromium Whatsapp Web
 GenericName=Whatsapp in Web Browser
 GenericName[en_US]=Whatsapp in Web Browser
 Comment=Whatsapp in Web Browser
-Exec=zsh -c 'chromium --user-data-dir=${HOME}/.config/chromium-W --password-store=gnome --app="https://web.whatsapp.com/"'
+Exec=chromium-W
 Path=
 Terminal=false
 Type=Application
@@ -13,8 +13,4 @@ StartupNotify=true
 Categories=Network;WebBrowser;
 MimeType=application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/about;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/unknown;
 NoDisplay=true
-Actions=new-window
 
-[Desktop Action new-window]
-Name=New Window
-Exec=zsh -c 'chromium --user-data-dir="~/.config/chromium-W" --password-store=gnome --new-window %U'

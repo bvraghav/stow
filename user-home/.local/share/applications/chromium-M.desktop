@@ -4,7 +4,7 @@ Name[en_US]=Chromium Microsoft Outlook 365
 GenericName=Microsoft Outlook 365 App in Web Browser
 GenericName[en_US]=Microsoft Outlook 365 App in Web Browser
 Comment=Microsoft Outlook 365 App in Web Browser
-Exec=zsh -c 'chromium --user-data-dir=${HOME}/.config/chromium-M --password-store=gnome --app="https://outlook.office.com/mail/"'
+Exec=chromium-M
 Path=
 Terminal=false
 Type=Application
@@ -17,4 +17,4 @@ Actions=new-window
 
 [Desktop Action new-window]
 Name=New Window
-Exec=zsh -c 'chromium --user-data-dir="~/.config/chromium-M" --password-store=gnome --new-window %U'
+Exec=chromium-M %U

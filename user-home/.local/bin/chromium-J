@@ -1,0 +1,3 @@
+#! /usr/bin/zsh
+
+chromium --user-data-dir=${HOME}/.config/chromium-J --incognito --new-window ${@}

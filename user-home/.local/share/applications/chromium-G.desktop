@@ -4,7 +4,7 @@ Name[en_US]=Chromium Google App
 GenericName=Google App in Web Browser
 GenericName[en_US]=Google App in Web Browser
 Comment=Google App in Web Browser
-Exec=zsh -c 'chromium --user-data-dir=${HOME}/.config/chromium-G --password-store=gnome --app="https://www.google.com/"'
+Exec=chromium-G
 Path=
 Terminal=false
 Type=Application
@@ -17,4 +17,4 @@ Actions=new-window
 
 [Desktop Action new-window]
 Name=New Window
-Exec=zsh -c 'chromium --user-data-dir="~/.config/chromium-G" --password-store=gnome --new-window %U'
+Exec=chromium-G %U

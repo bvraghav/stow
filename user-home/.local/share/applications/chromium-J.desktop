@@ -4,7 +4,7 @@ Name[en_US]=Jupyter Notebook in Chromium Browser
 GenericName=Jupyter Notebook in Chromium Browser
 GenericName[en_US]=Jupyter Notebook in Chromium Browser
 Comment=Jupyter Notebook in Chromium Browser
-Exec=zsh -c 'chromium --user-data-dir=${HOME}/.config/chromium-J --incognito --new-window %U'
+Exec=chromium-J
 Terminal=false
 Type=Application
 Icon=chromium

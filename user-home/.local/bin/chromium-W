@@ -1,0 +1,3 @@
+#! /usr/bin/zsh
+
+chromium --user-data-dir=${HOME}/.config/chromium-W --password-store=gnome --app="https://web.whatsapp.com/"
