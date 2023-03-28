@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Org-Protocol
-Exec=emacsclient %u
+Exec=fire_emacs %u
 Icon=emacs-icon
 Type=Application
 Terminal=false
