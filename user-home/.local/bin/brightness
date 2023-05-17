@@ -26,12 +26,12 @@ SED_REDSHIFT	+= s,-b *[^ ]\+,,;
 SED_REDSHIFT	+=
 SED_REDSHIFT	+=
 SED_REDSHIFT	+=
-redshift	:= $(shell			\
+redshift	:= $(or $(shell			\
   [ ! -f ~/.xprofile ] || {			\
     cat ~/.xprofile				\
     | sed '${SED_REDSHIFT}'			\
   }						\
-)
+),redshift)
 
 rel		= $(shell 			\
   echo ${VALUE} | grep -o '^[+-]'		\
@@ -90,7 +90,7 @@ inc dec : log
 set : log
 	$(warning val:"${VAL}" < "0.1". Switching off brightness)
 	xrandr --output ${DPY} --brightness 0
-else ifeq (1,$(shell (( abs($(cur) - ${VAL}) < 0.001 )) && echo 1))
+else ifeq (1,$(shell { (( abs($(cur) - ${VAL}) < 0.001 )) && echo 1 } ))
 inc dec set : log
 	@echo "Brightness cur:$(cur) is same as val:${VAL}"
 	@echo "Nothing to do. Exiting."
@@ -104,7 +104,7 @@ dec : log set
 set : log
 	@echo "Setting to $(VAL)"
 	@echo 
-	redshift -$(redshift) -b "${VAL}:${VAL}"
+	$(redshift) -b "${VAL}:${VAL}"
 	@echo
 endif
 
