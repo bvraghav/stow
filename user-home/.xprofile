@@ -56,7 +56,8 @@ enable_touchpad () {
 }
 
 startup() {
-  # ~/.screenlayout/vga-vert.sh
+  [ -f ~/.screenlayout/myscreen.sh ] && \
+    ~/.screenlayout/myscreen.sh
 
   # https://wiki.archlinux.org/title/Xorg/Keyboard_configuration
   setxkbmap gb
