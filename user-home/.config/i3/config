@@ -240,7 +240,7 @@ bindsym $mod+Shift+p workspace prev
 # THINKPAD
 font pango:$font 11
 
-# exit
+# exit (from lightdm/i3 session)
 bindsym $mod+Shift+Delete exit
 
 # browser
@@ -323,8 +323,9 @@ bindsym $mod+Shift+l move right
 # Switch to greeter
 bindsym $mod+q exec dm-tool switch-to-greeter
 
-# Suspend
-bindsym $mod+grave exec systemctl suspend
+# Suspend (or sleep)
+# bindsym $mod+grave exec systemctl suspend # backtick
+bindsym $mod+Delete exec systemctl suspend
 
 # Volume bindings
 bindsym $mod+bracketleft exec pactl set-sink-volume @DEFAULT_SINK@ -3%
