@@ -9,6 +9,7 @@ from enum import Enum
 import itertools as It
 import functools as Ft
 import time
+import logging as LG
 
 ## ----------------------------------------------------
 ## Configure THRESH LEVELS
@@ -61,6 +62,7 @@ class NagManager(NagData) :
 class BatMode(Enum) :
   DISCHARGING = 'discharging'
   CHARGING = 'charging'
+  FULL = 'full'
 
 @dataclass
 class BatStatus :
@@ -156,26 +158,42 @@ def t2remsec(isotime) :
   return t2s(isotime) - t2s(base)
 
 def getAcpiStatus() :
+  lg = LG.getLogger(__name__)
+
   bat_status = check_output(["acpi", "-b"]).decode()
   bat_status = next(filter(
     lambda s: s.lower().startswith('battery'),
     bat_status.split('\n')
   ))
   bat_status = bat_status.replace(':',',',1)
-  (
-    bat_name,
-    mode,
-    percent,
-    rem_time,
-  ) = map(
-    lambda s: s.strip(),
-    bat_status.split(',')
-  )
+
+  bat_status = dict(zip(
+    [
+      'bat_name',
+      'mode',
+      'percent',
+      'rem_time',
+    ],
+    map(
+      lambda s: s.strip(),
+      bat_status.split(',')
+    )
+  ))
+
+  bat_status = {
+    'rem_time': 0,
+    **bat_status
+  }
+
+  bat_name = bat_status['bat_name']
+  mode = bat_status['mode']
+  percent = bat_status['percent']
+  rem_time = bat_status['rem_time']
 
   bat_id = int(bat_name.split(' ')[-1])
   mode = BatMode(mode.lower())
   percent = int(percent.rstrip('%'))
-  rem_time = t2remsec(next(iter(rem_time.split())))
+  rem_time = rem_time and t2remsec(next(iter(rem_time.split())))
 
   return dict(
     bat_id = bat_id,
@@ -186,6 +204,11 @@ def getAcpiStatus() :
 
 
 if __name__ == '__main__' :
+
+  LG.basicConfig(
+    level=LG.INFO,
+    format='%(levelname)-8s: [%(name)s] %(message)s'
+  )
 
   print (getAcpiStatus())
 
