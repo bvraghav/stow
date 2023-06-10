@@ -52,9 +52,10 @@ text/x-tex=fire_emacs.desktop
 application/x-shellscript=fire_emacs.desktop
 text/x-c=fire_emacs.desktop
 text/x-c++=fire_emacs.desktop
+text/x-bibtex=fire_emacs.desktop
 
 [Added Associations]
 text/html=chromium-P.desktop
 text/xml=chromium-P.desktop
-
-
+text/x-bibtex=fire_emacs.desktop;
+text/vnd.trolltech.linguist=fire_emacs.desktop;
