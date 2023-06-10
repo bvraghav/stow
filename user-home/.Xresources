@@ -81,3 +81,10 @@ UXTerm.ttyModes: erase ^?
 ! Scroll length
 XTerm.vt100.saveLines: 4096
 UXTerm.vt100.saveLines: 4096
+
+
+!!!! --------------------------------------------------
+!!!! XCursor 
+!!!! --------------------------------------------------
+Xcursor.theme: whiteglass
+Xcursor.size: 24
