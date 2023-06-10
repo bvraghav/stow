@@ -8,6 +8,11 @@ Currently, I store the following configurations here,
 1. **The dot files in user home**  
 To install, them simply issue from the command line  
 ```sh
+make
+```
+
+OR, more verbose/ transparent:  
+```sh
 stow -t ~/  -S user-home
 ```
 
