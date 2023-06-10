@@ -1,0 +1,109 @@
+:PROPERTIES:
+:header-args:sh+: :shebang "#! /usr/bin/zsh" :results drawer
+:END:
+#+TITLE: Desktop Icon Themes
+
+* Affected config files
++ [[file:~/.config/gtk-3.0/settings.ini]]
++ [[file:~/.Xresources]]
++ [[file:~/.gtkrc-2.0.mine]]
++ [[file:~/.icons/default/index.theme]]
+
+* How to change icon theme
+
+https://unix.stackexchange.com/a/150860
+
+I can think of at least 2 options you can choose from:
+
+** use LXAppearance
+[[https://www.archlinux.org/packages/community/x86_64/lxappearance/][LXAppearance]] can change the GTK2/3 icons (and themes,
+fonts, etc.). LXAppearance is part of the LXDE desktop
+environment, but as you can see on the package page,
+its dependencies are only =dbus-glib= and =gtk2=.
+
+I prefer using LXAppearance because it gives access to
+all important theme-related settings but is still very
+lightweight.
+
+** Edit config files directly
+You can change =~/.gtkrc-2.0= and
+=~/.config/gtk-3.0/settings.ini= directly (the former
+for icons in GTK2 applications, the latter for GTK3
+applications) - the setting you're looking for is
+[[https://developer.gnome.org/gtk3/stable/GtkSettings.html#GtkSettings--gtk-icon-theme-name][=gtk-icon-theme-name=]] in both cases.
+
+For GTK2, you can just add a line like
+
+#+begin_src conf
+  gtk-icon-theme-name="Faenza-Ambiance"
+#+end_src
+to the file, for GTK3 the line needs to be inside a
+=[Settings]= section like
+
+#+begin_src conf
+  [Settings]
+  gtk-icon-theme-name=Faenza-Ambiance
+#+end_src
+
+You can find the name of the theme by looking at the
+=Name= property inside its =index.theme= file.
+
+#+begin_src sh
+  { cat ~/.gtkrc-2.0 || cat ~/.config/gtk-3.0/settings.ini } 2>&1
+#+end_src
+
+#+RESULTS:
+:results:
+cat: /home/rbv23/.gtkrc-2.0: No such file or directory
+cat: /home/rbv23/.config/gtk-3.0/settings.ini: No such file or directory
+:end:
+
+** XResources
+
+https://wiki.archlinux.org/title/Cursor_themes#X_resources
+
+#+begin_src conf-xdefaults
+  !!!! --------------------------------------------------
+  !!!! XCursor 
+  !!!! --------------------------------------------------
+  Xcursor.theme: whiteglass
+  Xcursor.size: 48
+#+end_src
+
+#+begin_src sh
+  xrdb ~/.Xresources
+#+end_src
+* Where are icons stored
+
+Globally: =/usr/share/icons/= \\
+or, \\
+in your home folder : =~/.local/share/icons= / =~/.icons=
+
+#+begin_src sh
+  ls /usr/share/icons
+#+end_src
+
+#+RESULTS:
+:results:
+Adwaita
+breeze
+breeze-dark
+default
+elementary
+gnome
+hicolor
+huiontablet.png
+la-capitaine
+locolor
+nvtop.svg
+:end:
+
+#+begin_src sh
+  { ls ~/.local/share/icons || ls ~/.icons } 2>&1
+#+end_src
+
+#+RESULTS:
+:results:
+ls: cannot access '/home/rbv23/.local/share/icons': No such file or directory
+ls: cannot access '/home/rbv23/.icons': No such file or directory
+:end:
