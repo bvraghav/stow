@@ -1,3 +1,5 @@
 [user]
 	name = Raghav B. Venkataramaiyer
 	email = bvraghav@gmail.com
+[init]
+	defaultBranch = master
