@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/zsh
 
 in_path() {
   NEEDLE=:"$1":
