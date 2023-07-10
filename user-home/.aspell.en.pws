@@ -1,4 +1,4 @@
-personal_ws-1.1 en 52 
+personal_ws-1.1 en 58 
 Caffe
 Composable
 ConvNext
@@ -28,13 +28,18 @@ centricity
 composable
 config
 discriminative
+downsampled
+embeddings
 encodings
 facs
 generalisability
 geotechnology
+ilp
+injective
 likert
 modeless
 opengl
+optimality
 parameterisation
 posteriori
 pretrained
@@ -46,6 +51,7 @@ rasterisers
 recommender
 reflectance
 renderer
+renderers
 shader
 skeletonisation
 softmax
