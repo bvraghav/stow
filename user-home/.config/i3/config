@@ -200,8 +200,9 @@ bindsym $mod+r mode "resize"
 # }
 
 bar {
-    status_command i3status
-    mode hide
+    status_command i3status-rs
+    # mode hide
+    mode dock
     position bottom
     output primary
     tray_output primary
