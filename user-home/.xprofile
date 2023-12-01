@@ -77,7 +77,7 @@ startup() {
   # setxkbmap gb
 
   # THINKPAD
-  redshift -P -l 50:0 -b 0.75:0.55 -t 4500:3500 -o  &
+  redshift -P -l 30:80 -b 0.75:0.55 -t 4500:3500 -o  &
   # systemctl start --user pulseaudio &
   xset b 10 1 10
   xset -dpms
