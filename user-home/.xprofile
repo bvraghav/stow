@@ -47,10 +47,23 @@ enable_touchpad_thinkpad () {
          -0.2
 }
 
+enable_touchpad_acer () {
+
+  # Enable touch pad tapping
+  # ... on Thinkpad
+  # https://wiki.archlinux.org/title/Libinput
+  xinput set-prop                              \
+         'ELAN0514:00 04F3:3179 Touchpad'      \
+         --type=int 'libinput Tapping Enabled' \
+         1
+
+}
+
 enable_touchpad () {
   case ${1} in
     dell) enable_touchpad_dell ;;
     thinkpad) enable_touchpad_thinkpad ;;
+    acer) enable_touchpad_acer ;;
     *) echo "Not Implemented enable_touchpad for ${1}" ;;
   esac
 }
@@ -96,7 +109,7 @@ startup() {
 	 --type=float "Coordinate Transformation Matrix" \
 	 0.68085106383 0 0 0 0.675 0 0 0 1
 
-  enable_touchpad thinkpad
+  enable_touchpad acer
 
   ~/.fehbg
 
