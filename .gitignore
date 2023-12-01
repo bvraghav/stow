@@ -1,2 +1,4 @@
 # Used to merge local configs
 *.local
+
+!.local/
