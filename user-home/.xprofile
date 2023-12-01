@@ -72,8 +72,9 @@ startup() {
   [ -f ~/.screenlayout/myscreen.sh ] && \
     ~/.screenlayout/myscreen.sh
 
-  # https://wiki.archlinux.org/title/Xorg/Keyboard_configuration
-  setxkbmap gb
+  # Instead use vconsole.conf!
+  # # https://wiki.archlinux.org/title/Xorg/Keyboard_configuration
+  # setxkbmap gb
 
   # THINKPAD
   redshift -P -l 50:0 -b 0.75:0.55 -t 4500:3500 -o  &
