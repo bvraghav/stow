@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=Thapar Uni's Webkiosk App in Chromium Web Browser
+Name[en_US]=Thapar Uni's Webkiosk App in Chromium Web Browser
+GenericName=Thapar Uni's Webkiosk App in Chromium Web Browser
+GenericName[en_US]=Thapar Uni's Webkiosk App in Chromium Web Browser
+Comment=Thapar Uni's Webkiosk App in Chromium Web Browser
+Exec=chromium-K
+Path=
+Terminal=false
+Type=Application
+Icon=chromium
+StartupNotify=true
+Categories=Network;WebBrowser;
+MimeType=application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/about;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/unknown;
+NoDisplay=true

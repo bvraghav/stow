@@ -1,0 +1,20 @@
+[Desktop Entry]
+Name=Chromium Google App for Thapar University
+Name[en_US]=Chromium Google App for Thapar University
+GenericName=Google App for Thapar University in Web Browser
+GenericName[en_US]=Google App for Thapar University in Web Browser
+Comment=Google App for Thapar University in Web Browser
+Exec=chromium-T
+Path=
+Terminal=false
+Type=Application
+Icon=chromium
+StartupNotify=true
+Categories=Network;WebBrowser;
+MimeType=application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/about;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/unknown;
+NoDisplay=true
+Actions=new-window
+
+[Desktop Action new-window]
+Name=New Window
+Exec=chromium-T %U
