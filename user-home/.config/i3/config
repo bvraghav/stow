@@ -256,6 +256,8 @@ bindsym control+$mod+w exec gtk-launch chromium-W
 # bindsym control+$mod+j exec chromium --user-data-dir=${HOME}/.config/chromium-J --incognito --new-window
 bindsym control+$mod+j exec gtk-launch chromium-J
 bindsym control+$mod+l exec gtk-launch chromium-L
+bindsym control+$mod+k exec gtk-launch chromium-K
+bindsym control+$mod+t exec gtk-launch chromium-T
 
 
 # file-manager
