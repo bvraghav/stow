@@ -14,8 +14,13 @@ icons = "awesome6"
 # bat_charging = "|^| "
 
 [[block]]
+block = "net"
+# format = " $icon ^icon_net_down $speed_down.eng(prefix:K) ^icon_net_up $speed_up.eng(prefix:K) "
+format = "  $icon"
+
+[[block]]
 block = "external_ip"
-format = " $ip $country_code "
+format = "$ip $region_code/$country_code "
 
 [[block]]
 block = "cpu"
@@ -28,7 +33,7 @@ alert_unit = "GB"
 interval = 20
 warning = 20.0
 alert = 10.0
-format = " $icon root: $available.eng(w:2) "
+format = " $icon $available.eng(w:2) "
 
 [[block]]
 block = "memory"
