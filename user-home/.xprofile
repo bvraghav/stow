@@ -59,14 +59,37 @@ enable_touchpad_acer () {
 
 }
 
+enable_touchpad_acer_tiet () {
+
+  # Enable touch pad tapping
+  # ... on Thinkpad
+  # https://wiki.archlinux.org/title/Libinput
+  xinput set-prop                              \
+         'SYNA7DB5:00 06CB:CEB1 Touchpad'      \
+         --type=int 'libinput Tapping Enabled' \
+         1
+
+}
+
+
 enable_touchpad () {
   case ${1} in
     dell) enable_touchpad_dell ;;
     thinkpad) enable_touchpad_thinkpad ;;
     acer) enable_touchpad_acer ;;
+    acer_tiet) enable_touchpad_acer_tiet ;;
     *) echo "Not Implemented enable_touchpad for ${1}" ;;
   esac
 }
+
+
+set_mouse_accel_on_acer_tiet () {
+  xinput set-prop                    \
+         'Compx 2.4G Receiver Mouse' \
+         'libinput Accel Speed'      \
+         -0.75
+}
+
 
 startup() {
   [ -f ~/.screenlayout/myscreen.sh ] && \
@@ -110,9 +133,11 @@ startup() {
 	 --type=float "Coordinate Transformation Matrix" \
 	 0.68085106383 0 0 0 0.675 0 0 0 1
 
-  enable_touchpad acer
+  enable_touchpad acer_tiet &
 
-  ~/.fehbg
+  set_mouse_accel_on_acer_tiet &
+
+  ~/.fehbg &
 
   nm-applet &
   
@@ -125,6 +150,7 @@ startup() {
   make -C ${XDG_CONFIG_HOME}/i3 &
 
   battery-warn &
+
 }
 
 
@@ -207,7 +233,6 @@ export XDG_CONFIG_HOME=${HOME}/.config
 
 ## TERMINAL
 ## -----------------------------------
-
 export TERMINAL=tmux
 
 # ## proxy setup
