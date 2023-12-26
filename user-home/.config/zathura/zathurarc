@@ -3,3 +3,8 @@ set synctex-editor-command "emacsclient +%{line} %{input}"
 set recolor-lightcolor "#3F3F3F"
 set recolor true
 set selection-clipboard clipboard
+
+
+# Key bindings
+map D set "first-page-column 1:1"
+map <A-D> set "first-page-column 1:2"
