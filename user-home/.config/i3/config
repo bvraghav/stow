@@ -204,7 +204,7 @@ bar {
     # mode hide
     mode dock
     position bottom
-    output primary
+    # output primary
     tray_output primary
     # THINKPAD
     # font pango:$font 11
