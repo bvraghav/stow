@@ -1,0 +1,28 @@
+#! /bin/zsh
+
+devices () {
+  xinput list |           \
+    grep -i huion |       \
+    grep -i pen |         \
+    grep -o 'id=[0-9]*' | \
+    cut -d= -f2
+}
+
+transform () {
+  xinput set-prop "$1" \
+         --type=float \
+         "Coordinate Transformation Matrix" \
+         0.5 0 0 0 1 0 0 0 1
+}
+
+main() {
+  devices | \
+    while read DEVICE ; do
+      echo -n "${DEVICE} "
+      transform ${DEVICE}
+      echo "...done"
+    done
+      
+}
+
+main
