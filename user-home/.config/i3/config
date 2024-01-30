@@ -261,7 +261,13 @@ bindsym control+$mod+t exec gtk-launch chromium-T
 
 
 # file-manager
-bindsym $mod+e exec pcmanfm
+# bindsym $mod+e exec pcmanfm
+# # To install run on cli: (yay -S --confirm worker) # Caution: this takes a long time to build and install.
+# bindsym $mod+e exec worker
+# Use Emacs as default File Manager
+bindsym $mod+e exec fire_emacs ~
+# Use PcManFM as alternate File Manager
+bindsym control+$mod+e exec pcmanfm
 
 # layout
 bindsym $mod+s layout stacking
