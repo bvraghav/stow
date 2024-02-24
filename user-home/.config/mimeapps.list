@@ -53,6 +53,7 @@ application/x-shellscript=fire_emacs.desktop
 text/x-c=fire_emacs.desktop
 text/x-c++=fire_emacs.desktop
 text/x-bibtex=fire_emacs.desktop
+inode/directory=fire_emacs.desktop
 
 [Added Associations]
 text/html=chromium-P.desktop
