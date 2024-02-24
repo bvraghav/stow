@@ -236,6 +236,11 @@ export XDG_CONFIG_HOME=${HOME}/.config
 ## -----------------------------------
 export TERMINAL=tmux
 
+## GNU Global Setup
+## ----------------------------------------------------
+export GTAGSCONF=/usr/share/gtags/gtags.conf
+export GTAGSLABEL=new-ctags
+
 # ## proxy setup
 # ## -----------------------------------
 # proxy="http://127.0.0.1:3128"
