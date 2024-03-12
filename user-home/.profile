@@ -39,6 +39,9 @@ fi
     export NODE_PATH="$HOME/.local/lib/node_modules:$NODE_PATH"
 }
 
+# Setup DICPATH for Hunspell
+DICPATH=~/.local/spell:~/.config/spell
+
 ## set GUILE_XXX environment variables
 ## -----------------------------------
 # export GUILE_AUTO_COMPILE

@@ -227,6 +227,9 @@ fi
     export NODE_PATH="$HOME/.local/lib/node_modules:$NODE_PATH"
 }
 
+# Setup DICPATH for Hunspell
+DICPATH=~/.local/spell:~/.config/spell
+
 ## XDG config
 ## -----------------------------------
 export XDG_CONFIG_HOME=${HOME}/.config
