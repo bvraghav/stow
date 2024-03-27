@@ -3,3 +3,7 @@
 	email = bvraghav@gmail.com
 [init]
 	defaultBranch = master
+[github]
+	user = bvraghav
+[gitlab]
+	user = bvraghav
