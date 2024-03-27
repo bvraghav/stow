@@ -178,6 +178,10 @@ if [ -d "$HOME/.local/bin" ] ; then
     export PATH="$HOME/.local/bin:$PATH"
 fi
 
+# set PATH so it includes Rust' cargo binary if it exists
+[ -d "$HOME/.cargo/bin" ] && \
+    export PATH="$HOME/.cargo/bin:$PATH"
+
 # set PATH to include screelayouts
 if [ -d "$HOME/.screenlayout" ] ; then
     export PATH="$PATH:$HOME/.screenlayout"

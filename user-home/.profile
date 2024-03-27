@@ -21,6 +21,9 @@ in_path() {
 # set PATH so it includes user's private .local/bin if it exists
 [ -d "$HOME/.local/bin" ] && \
     export PATH="$HOME/.local/bin:$PATH"
+# set PATH so it includes Rust' cargo binary if it exists
+[ -d "$HOME/.cargo/bin" ] && \
+    export PATH="$HOME/.cargo/bin:$PATH"
 
 # set GTAGSLIBPATH path variable for Gtags
 if [ -d "$HOME/.gtags" ] ; then
