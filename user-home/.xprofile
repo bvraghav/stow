@@ -257,6 +257,7 @@ export GTAGSLABEL=new-ctags
 #   ftp_proxy=$proxy	\
 #   socks_proxy=$proxy
 
+export EDITOR=fire_emacs
 
 ## startup
 ## -----------------------------------
