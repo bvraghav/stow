@@ -9,10 +9,21 @@ devices () {
 }
 
 transform () {
+  # This is the default matrix. See
+  # tabletCalibrateRight for more details.
   xinput set-prop "$1" \
          --type=float \
          "Coordinate Transformation Matrix" \
-         0.5 0 0 0 1 0 0 0 1
+         1 0 0 0 1 0 0 0 1
+
+  # Prior to installing huion tablet driver.
+  # ---------------------------------------------------
+  # Scale X by half. Rest is the identity. Makes sense!
+  # xinput set-prop "$1" \
+  #        --type=float \
+  #        "Coordinate Transformation Matrix" \
+  #        0.5 0 0 0 1 0 0 0 1
+
 }
 
 main() {

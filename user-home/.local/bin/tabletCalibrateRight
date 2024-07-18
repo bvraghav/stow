@@ -9,10 +9,21 @@ devices () {
 }
 
 transform () {
+  # Shift X by 0.5; But don't scale. It does not make
+  # sense, but does work
   xinput set-prop "$1" \
          --type=float \
          "Coordinate Transformation Matrix" \
-         0.5 0 0.5 0 1 0 0 0 1
+         1 0 0.5 0 1 0 0 0 1
+
+  # Was used earlier; before installing huion
+  # proprietary driver
+  # ---------------------------------------------------
+  # Scale X by 0.5 and shift right by 0.5 too!
+  # xinput set-prop "$1" \
+  #        --type=float \
+  #        "Coordinate Transformation Matrix" \
+  #        0.5 0 0.5 0 1 0 0 0 1
 }
 
 main() {
