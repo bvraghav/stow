@@ -78,9 +78,10 @@ zmodload zsh/mathfunc
 # PERL_MM_OPT="INSTALL_BASE=/home/bvr/perl5"; export PERL_MM_OPT;
 
 
-## Load simple functions
+## Load simple functions if available.
 ## ----------------------------------------------------
-source ~/.functions.zsh
+[ -f ~/.functions.zsh ] && \
+  source ~/.functions.zsh
 
 ## ----------------------------------------------------
 
