@@ -102,16 +102,27 @@ create-frame-may-be () {
   local SOCKET=${OPT_SOCKET}
 
   # should be a valid exit if [ ! -z ${OPT_NO_FRAME} ]
-  [ ! -z ${OPT_NO_FRAME} ] || {
-  
+  if [ ! -z ${OPT_NO_FRAME} ] ; then
+
+    # remove first --
+    end_opts=$@[(i)(--)]
+    set -- "${@[end_opts+1,-1]}"
+    err "[INFO    ] Num args for emacs: ${#@}"
+    err "[INFO    ] Args for emacs: ${@}"
+    if [[ ! -z "${@}" ]] ; then 
+      emacsclient -s ${SOCKET} ${@}
+    fi
+    
+  else 
 
     # remove first --
     end_opts=$@[(i)(--)]
     set -- "${@[0,end_opts-1]}" "${@[end_opts+1,-1]}"
-    err "[INFO    ] Creating frame using args: ${@}"
+    err "[INFO    ] Firing Emacs with frame using args: ${@}"
     
     emacsclient -s ${SOCKET} -c ${@}
-  }
+
+  fi
 }
 
 main() {
