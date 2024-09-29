@@ -73,12 +73,22 @@ zle -N down-line-or-beginning-search
 [[ -n "$key[Down]" ]] && bindkey -- "$key[Down]" down-line-or-beginning-search
 
 
-
 ## Zsh Highlighting
 ## -----------------------------------
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+
+## Zsh Completion for gitflow
+## ----------------------------------------------------
+## Prereq:
+## yay -S gitflow-cjs gitflow-zshcompletion-avh
+source /usr/share/zsh/site-functions/git-flow-completion.zsh || {
+  cat >&2 <<EOF
+[ WARNING ] git-flow not installed.  Try:
+[ WARNING ]   yay -S gitflow-cjs gitflow-zshcompletion-avh
+EOF
+}
 
 
 ## Key bindings
