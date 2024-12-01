@@ -11,7 +11,7 @@ bindkey -e
 ## Local Plugins Setup
 ## ----------------------------------------------------
 # Add local plugins directory to the zsh fpath
-export fpath=(./.local/share/plugins.zsh $fpath)
+export fpath=(~/.local/share/plugins.zsh $fpath)
 
 ## ----------------------------------------------------
 ## Completion Setup
