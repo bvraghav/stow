@@ -1,0 +1,55 @@
+#+date: Created: [2024-12-01 Sun]
+
+This is a set of notes to install different programs.
+
+* To Stow
+*This has already been implemented as automation in
+Makefile.*
+
+Prior to installation
+
+#+begin_src sh
+  cd ~/code/stow/user-home
+  find . -type d \
+    | sed '/^\.$/d' \
+    | sed 's,^\.,'$HOME',g' \
+    | parallel mkdir
+#+end_src
+
+
+* Exercism for Julia
+
+Check out the download URL at [[https://github.com/exercism/cli/releases/tag/v3.5.4][this release page]].
+
+#+begin_src sh :shebang "#! /bin/zsh"
+  URL="https://github.com/exercism/cli/releases/download/v3.5.4/exercism-3.5.4-linux-x86_64.tar.gz"
+  PREFIX=~/.local/exercism
+  BIN_PREFIX=~/.local/bin
+  ZSH_PLUGINS_PREFIX=~/.local/share/plugins.zsh
+
+  mkdir -p ${PREFIX}
+  cd ${PREFIX}
+  curl -sLo - ${URL} | tar -xzf -
+
+  mkdir -p ${BIN_PREFIX}
+  cd ${BIN_PREFIX}
+  realpath --relative-to ${BIN_PREFIX} ${PREFIX}
+  RTMP=$(realpath --relative-to ${BIN_PREFIX} \
+                  ${PREFIX})
+  ln -sf ${RTMP}/exercism .
+
+  mkdir -p ${ZSH_PLUGINS_PREFIX}
+  cd ${ZSH_PLUGINS_PREFIX}
+  RTMP=$(realpath --relative-to ${ZSH_PLUGINS_PREFIX} \
+                  ${PREFIX})
+  ln -sf ${RTMP}/shell/exercism_completion.zsh ./_exercism
+#+end_src
+
+** Configure
+
+Copy token from [[https://exercism.org/settings/api_cli][this dashboard page]]
+
+#+begin_src sh
+  TOKEN=
+  exercism configure --token=$TOKEN
+#+end_src
