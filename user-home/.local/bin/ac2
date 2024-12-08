@@ -1,0 +1,20 @@
+#! /bin/zsh
+
+local THIS_DIR=$(dirname $0)
+local PREFIX=${THIS_DIR}/ac2-latest
+local JAR=$(realpath -m ${PREFIX}/ac2-SNAPSHOT.jar)
+
+main () {
+  [ -f ${JAR} ] || {
+    {
+      echo -n "[INFO] $0: No jar: ${JAR}"
+      echo "[INFO] $0: Building." 
+      echo "[INFO] $0: THIS_DIR: ${THIS_DIR}"
+    } >&2
+    make -C ${PREFIX}
+  }
+
+  java -jar ${JAR}
+}
+
+main
