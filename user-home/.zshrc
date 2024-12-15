@@ -89,12 +89,14 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 ## ----------------------------------------------------
 ## Prereq:
 ## yay -S gitflow-cjs gitflow-zshcompletion-avh
-source /usr/share/zsh/site-functions/git-flow-completion.zsh || {
-  cat >&2 <<EOF
+source /home/bvr/.local/share/plugins.zsh/git-flow-completion.zsh \
+  || source /usr/share/zsh/site-functions/git-flow-completion.zsh \
+  || {
+    cat >&2 <<EOF
 [ WARNING ] git-flow not installed.  Try:
 [ WARNING ]   yay -S gitflow-cjs gitflow-zshcompletion-avh
 EOF
-}
+  }
 
 
 ## Key bindings
