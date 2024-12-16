@@ -161,10 +161,16 @@ def getAcpiStatus() :
   lg = LG.getLogger(__name__)
 
   bat_status = check_output(["acpi", "-b"]).decode()
-  bat_status = next(filter(
-    lambda s: s.lower().startswith('battery'),
-    bat_status.split('\n')
-  ))
+
+  try :
+    bat_status = next(filter(
+      lambda s: s.lower().startswith('battery'),
+      bat_status.split('\n')
+    ))
+  except StopIteration as e :
+    lg.warning('No battery in acpi.')
+    return dict()
+
   bat_status = bat_status.replace(':',',',1)
 
   bat_status = dict(zip(
@@ -210,6 +216,7 @@ if __name__ == '__main__' :
     format='%(levelname)-8s: [%(name)s] %(message)s'
   )
 
-  print (getAcpiStatus())
+  D = getAcpiStatus()
 
-  BatteryManager(**getAcpiStatus())()
+  print(D)
+  if 0 < len(D) : BatteryManager(**D)()
