@@ -145,7 +145,7 @@ all :${I3_HTML}
 
 
 %/keybindings.html : %/config
-	rm ${@}
+	-rm ${@}
 	$(call WRITE_CSS_STYLES,${@})
 	$(call WRITE_TITLE,${@})
 	$(call WRITE_H1,${@})
