@@ -1,0 +1,3 @@
+#!/bin/zsh
+[ -z "~/.wallpapers/*" ] \
+  || feh --no-fehbg --bg-fill --randomize ~/.wallpapers/*

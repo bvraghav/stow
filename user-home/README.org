@@ -2,20 +2,18 @@
 
 This is a set of notes to install different programs.
 
-* To Stow
-*This has already been implemented as automation in
-Makefile.*
+* Desktop background with =fehbg=
 
-Prior to installation
+List of background images are searched for in the
+following location \\
+=~/.wallpapers=
 
+Here’s the script:
 #+begin_src sh
-  cd ~/code/stow/user-home
-  find . -type d \
-    | sed '/^\.$/d' \
-    | sed 's,^\.,'$HOME',g' \
-    | parallel mkdir
+  #!/bin/zsh
+  [ -z "~/.wallpapers/*" ] \
+    || feh --no-fehbg --bg-fill --randomize ~/.wallpapers/*
 #+end_src
-
 
 * Exercism for Julia
 
@@ -53,3 +51,19 @@ Copy token from [[https://exercism.org/settings/api_cli][this dashboard page]]
   TOKEN=
   exercism configure --token=$TOKEN
 #+end_src
+
+* To Stow
+*This has already been implemented as automation in
+Makefile.*
+
+Prior to installation
+
+#+begin_src sh
+  cd ~/code/stow/user-home
+  find . -type d \
+    | sed '/^\.$/d' \
+    | sed 's,^\.,'$HOME',g' \
+    | parallel mkdir
+#+end_src
+
+
