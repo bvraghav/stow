@@ -21,10 +21,6 @@ in_path() {
 # set PATH so it includes user's private .local/bin if it exists
 [ -d "$HOME/.local/bin" ] && \
     export PATH="$HOME/.local/bin:$PATH"
-# set PATH so it includes Rust' cargo binary if it exists
-[ -d "$HOME/.cargo/bin" ] && \
-    export PATH="$HOME/.cargo/bin:$PATH"
-
 # set GTAGSLIBPATH path variable for Gtags
 if [ -d "$HOME/.gtags" ] ; then
     export GTAGSLIBPATH="$HOME/.gtags:$GTAGSLIBPATH"
@@ -80,3 +76,29 @@ export PM_PACKAGES_ROOT=$HOME/packman-repo
 ## Setup ffbookmarks
 ## -----------------------------------
 export FIREFOXEXE="/usr/bin/firefox -P D --private-window"
+
+# Rustup Initialise or else,
+# Or else, set PATH so it includes Rust' cargo binary
+# if it exists
+{
+  [ -f "$HOME/.cargo/env" ] && \
+    . "$HOME/.cargo/env"
+} || {
+  [ -d "$HOME/.cargo/bin" ] && \
+    export PATH="$HOME/.cargo/bin:$PATH"
+}
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+case ":$PATH:" in
+    *:/home/bvr/.juliaup/bin:*)
+        ;;
+
+    *)
+        export PATH=/home/bvr/.juliaup/bin${PATH:+:${PATH}}
+        ;;
+esac
+
+# <<< juliaup initialize <<<
