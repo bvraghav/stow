@@ -64,13 +64,13 @@ enable_touchpad_acer_tiet () {
   # Enable touch pad tapping
   # ... on Thinkpad
   # https://wiki.archlinux.org/title/Libinput
-  xinput set-prop                              \
-         'SYNA7DB5:00 06CB:CEB1 Touchpad'      \
-         --type=int 'libinput Tapping Enabled' \
-         1
-
+  if xinput list 'SYNA7DB5:00 06CB:CEB1 Touchpad' >/dev/null 2>&1 ; then
+    xinput set-prop                            \
+           'SYNA7DB5:00 06CB:CEB1 Touchpad'    \
+           --type=int                          \
+           'libinput Tapping Enabled' 1
+  fi
 }
-
 
 enable_touchpad () {
   case ${1} in
@@ -84,10 +84,12 @@ enable_touchpad () {
 
 
 set_mouse_accel_on_acer_tiet () {
-  xinput set-prop                    \
-         'Compx 2.4G Receiver Mouse' \
-         'libinput Accel Speed'      \
-         -0.75
+  if xinput list 'Compx 2.4G Receiver Mouse' >/dev/null 2>&1 ; then
+    xinput set-prop                    \
+           'Compx 2.4G Receiver Mouse' \
+           'libinput Accel Speed'      \
+           -0.75
+  fi
 }
 
 
@@ -129,25 +131,31 @@ startup() {
   # slack &
   # watch-servers &
 
-  xinput set-prop "HUION PenTablet Pad" \
-	 --type=float "Coordinate Transformation Matrix" \
-	 0.68085106383 0 0 0 0.675 0 0 0 1
-  xinput set-prop "HUION PenTablet Pen Pen (0)" \
-	 --type=float "Coordinate Transformation Matrix" \
-	 0.68085106383 0 0 0 0.675 0 0 0 1
+  if xinput list "HUION PenTablet Pad" >/dev/null 2>&1 ; then
+    xinput set-prop "HUION PenTablet Pad" \
+           --type=float "Coordinate Transformation Matrix" \
+           0.68085106383 0 0 0 0.675 0 0 0 1
+  fi
+
+  if xinput list "HUION PenTablet Pen Pen (0)" >/dev/null 2>&1 ; then
+    xinput set-prop "HUION PenTablet Pen Pen (0)" \
+           --type=float "Coordinate Transformation Matrix" \
+           0.68085106383 0 0 0 0.675 0 0 0 1
+  fi
 
   enable_touchpad acer_tiet &
 
   set_mouse_accel_on_acer_tiet &
 
-  ~/.fehbg &
+  # feh --bg-fill --randomize ~/.wallpaper/*
+  [ -f ~/.fehbg ] && ~/.fehbg &
 
   nm-applet &
   
   gtk-launch huiontablet &
 
   {
-    xdg-user-dirs-update --set DOCUMENTS  ~/docs
+    xdg-user-dirs-update --set DOCUMENTS ~/docs
   } &
 
   make -C ${XDG_CONFIG_HOME}/i3 &
