@@ -112,8 +112,10 @@ startup() {
 
   # configure fonts
   F=`find_fonts`
-  xset +fp $F
-  xset fp rehash
+  [ -z $F ] || {
+    xset +fp $F
+    xset fp rehash
+  }
 
   # fire_emacs GNUS_SERVER >/dev/null 2>&1 &
   # { sleep 1 ; fire_emacs ; } >/dev/null 2>&1 &
