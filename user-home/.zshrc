@@ -89,8 +89,12 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 ## ----------------------------------------------------
 ## Prereq:
 ## yay -S gitflow-cjs gitflow-zshcompletion-avh
-source /home/bvr/.local/share/plugins.zsh/git-flow-completion.zsh \
-  || source /usr/share/zsh/site-functions/git-flow-completion.zsh \
+local usr=/home/bvr/.local/share/plugins.zsh
+local sys=/usr/share/zsh/site-functions
+source ${lcl}/git-flow-completion.zsh \
+       2>/dev/null \
+  || source ${sys}/git-flow-completion.zsh \
+            2>/dev/null \
   || {
     cat >&2 <<EOF
 [ WARNING ] git-flow not installed.  Try:
