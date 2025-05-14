@@ -1,3 +1,4 @@
 #! /usr/bin/zsh
 
-chromium --user-data-dir=${HOME}/.config/chromium-K --password-store=gnome --app="https://www.thapar.edu/students/pages/webkiosk"
+# raghav.aiyyar
+chromium --user-data-dir=${HOME}/.config/chromium-K --password-store=gnome --app="https://google.com/"
