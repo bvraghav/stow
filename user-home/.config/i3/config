@@ -144,16 +144,16 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws0
 
 ## Assign workspaces by criteria
-assign [class="(?i)firefox"] workspace number $ws1
-assign [class="(?i)(blender|inkscape)"] workspace number $ws5
+# assign [class="(?i)firefox"] workspace number $ws1
+# assign [class="(?i)(blender|inkscape)"] workspace number $ws5
 # assign [class="(?i)gimp"] workspace number $ws7
-assign [class="(?i)zotero"] workspace number $ws9
-assign [class="(?i)slack"] workspace number $ws0
-assign [class="(?i)watch-gpu-servers" ] workspace number $ws8
+# assign [class="(?i)zotero"] workspace number $ws9
+# assign [class="(?i)slack"] workspace number $ws0
+# assign [class="(?i)watch-gpu-servers" ] workspace number $ws8
 
 ## Finer control
-for_window [class="(?i)firefox" title="(?i)mail"] move to workspace number $ws3
-# for_window [class="(?i)pcmanfm"] floating enable
+# for_window [class="(?i)firefox" title="(?i)mail"] move to workspace number $ws3
+for_window [class="(?i)pcmanfm"] floating enable, move position center
 for_window [class="(?i)xterm"] floating enable, move position center, border none
 for_window [class="(?i)feh"] floating enable, move position center, border none
 
