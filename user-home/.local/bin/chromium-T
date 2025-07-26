@@ -1,3 +1,8 @@
 #! /usr/bin/zsh
 
-chromium --user-data-dir=${HOME}/.config/chromium-T --password-store=gnome --app="https://google.com/"
+if [[ ! -z "$@" ]] ; then
+  echo $@
+  chromium --user-data-dir=${HOME}/.config/chromium-T --password-store=gnome $@
+else
+  chromium --user-data-dir=${HOME}/.config/chromium-T --password-store=gnome --app="https://google.com/"
+fi
