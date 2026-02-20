@@ -386,7 +386,7 @@ mode "$music_player_mode" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-bindsym $mod+m mode "music_player"
+bindsym $mod+m mode "$music_player_mode"
 
 set $display_configure_mode Display Configure Screen Layout: Up:with-tv Down:vert_1 Left:verts Right:two-by-the-side
 mode "$display_configure_mode" {
