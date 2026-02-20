@@ -242,7 +242,7 @@ bindsym $mod+Shift+p workspace prev
 font pango:$font 11
 
 # exit (from lightdm/i3 session)
-bindsym $mod+Shift+Delete exit
+bindsym $mod+Shift+Delete exec --no-startup-id ~/.xlogout ; exit
 
 # browser
 bindsym control+$mod+p exec gtk-launch chromium-P
