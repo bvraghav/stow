@@ -366,7 +366,8 @@ bindsym $mod+XF86MonBrightnessDown exec brightness VALUE=0
 
 ## Modes
 # resize window (you can also use the mouse for that)
-mode "music_player" {
+set $music_player_mode Music Player: h:<< j:< k:> l:>> Space:Pause/Play ,:|< .:>| S-!:Stop
+mode "$music_player_mode" {
         # These bindings trigger as soon as you enter the resize mode
 
         bindsym h exec mpc seek -5%
