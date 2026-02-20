@@ -162,6 +162,9 @@ startup() {
 
   battery-warn &
 
+  systemctl --user daemon-reload &
+  systemctl --user restart clockbg.timer &
+
 }
 
 

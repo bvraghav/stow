@@ -1,0 +1,8 @@
+[Unit]
+Description=Update clock as background (wallpaper) widget.
+
+[Service]
+ExecStart=make -B -C ${HOME}/.local/clockbg
+
+[Install]
+WantedBy=multi-user.target

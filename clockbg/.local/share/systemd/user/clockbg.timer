@@ -1,0 +1,11 @@
+[Unit]
+Description=Update clock as background (wallpaper) widget every second.
+
+[Timer]
+# OnActiveSec=1
+OnCalendar=*:*:0/2
+AccuracySec=1s
+Persistent=false
+
+[Install]
+WantedBy=timers.target

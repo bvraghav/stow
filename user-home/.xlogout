@@ -1,0 +1,10 @@
+#! /bin/zsh
+
+bvr_shutdown() {
+  # echo "[INFO]    Running BVR_SHUTDOWN function." >> ~/.xlogout_log
+  systemctl --user stop clockbg.timer
+}
+
+# echo "[INFO]    Running XLOGOUT script." >> ~/.xlogout_log
+bvr_shutdown
+# echo >> ~/.xlogout_log
