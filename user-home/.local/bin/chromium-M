@@ -1,4 +1,5 @@
 #! /usr/bin/zsh
 
-chromium --user-data-dir=${HOME}/.config/chromium-M2 --password-store=gnome "https://kcc.okta.com/" "https://windows365.microsoft.com/"
+chromium --user-data-dir=${HOME}/.config/chromium-M3 --password-store=gnome --incognito --new-window ${@}
+# chromium --user-data-dir=${HOME}/.config/chromium-M2 --password-store=gnome "https://kcc.okta.com/" "https://windows365.microsoft.com/"
 # chromium --user-data-dir=${HOME}/.config/chromium-M --password-store=gnome --app="https://outlook.office.com/mail/"
