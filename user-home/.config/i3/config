@@ -69,6 +69,10 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
+# Un/minimise a window (Use scratchpad)
+bindsym $mod+Control+Shift+Up scratchpad show
+bindsym $mod+Control+Shift+Down move scratchpad
+
 # # split in horizontal orientation
 # bindsym $mod+h split h
 
