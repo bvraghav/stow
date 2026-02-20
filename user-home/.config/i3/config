@@ -387,17 +387,18 @@ mode "music_player" {
 }
 bindsym $mod+m mode "music_player"
 
-mode display_configure {
-     bindsym Up exec /home/bvr/.screenlayout/with-tv.sh
-     bindsym Down exec /home/bvr/.screenlayout/vert_1.sh
-     bindsym Left exec /home/bvr/.screenlayout/verts.sh
-     bindsym Right exec /home/bvr/.screenlayout/verts.sh
+set $display_configure_mode Display Configure Screen Layout: Up:with-tv Down:vert_1 Left:verts Right:two-by-the-side
+mode "$display_configure_mode" {
+     bindsym Up exec /home/bvr/.screenlayout/with-tv.sh            ; mode "default"
+     bindsym Down exec /home/bvr/.screenlayout/vert_1.sh           ; mode "default"
+     bindsym Left exec /home/bvr/.screenlayout/verts.sh            ; mode "default"
+     bindsym Right exec /home/bvr/.screenlayout/two-by-the-side.sh ; mode "default"
 
      # back to normal: Enter or Escape
      bindsym Return mode "default"
      bindsym Escape mode "default"
 }
-bindsym $mod+Control+d mode "display_configure"
+bindsym $mod+Control+d mode "$display_configure_mode"
 
 ## Screen capture mode
 ## ----------------------------------------------------
