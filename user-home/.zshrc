@@ -69,31 +69,6 @@ if has_brew_prefix ; then
 fi
 ## ----------------------------------------------------
 
-## Following code for conda init has been edited by
-## BVR: Abstracted out home directories for conda to
-## function.
-## 
-## 1. Abstract out the conda root folder and the rest all
-## remains good.
-## ----------------------------------------------------
-
-bvr__conda_root=$(realpath ~/miniconda3)
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$("${bvr__conda_root}"/bin/conda 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "${bvr__conda_root}/etc/profile.d/conda.sh" ]; then
-        . "${bvr__conda_root}/etc/profile.d/conda.sh"
-    else
-        export PATH="${bvr__conda_root}/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
 export NVM_DIR="$HOME/.config/nvm"
 # [ -s FILE ] is true if FILE exists and has size
 # greater than zero.
@@ -116,3 +91,16 @@ path=('/home/bvr/.juliaup/bin' $path)
 export PATH
 
 # <<< juliaup initialize <<<
+
+# >>> mamba initialize >>>
+# !! Contents within this block are managed by 'micromamba shell init' !!
+export MAMBA_EXE="${HOME}/.local/bin/micromamba";
+export MAMBA_ROOT_PREFIX="${HOME}/micromamba";
+__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__mamba_setup"
+else
+    alias micromamba="$MAMBA_EXE"  # Fallback on help from micromamba activate
+fi
+unset __mamba_setup
+# <<< mamba initialize <<<
