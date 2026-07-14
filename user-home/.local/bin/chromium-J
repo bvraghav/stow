@@ -1,8 +1,0 @@
-#! /usr/bin/zsh
-
-chromium --user-data-dir=${HOME}/.config/chromium-BNV --password-store=gnome --new-window ${@}
-# chromium --user-data-dir=${HOME}/.config/chromium-J \
-#          --password-store=gnome                     \
-#          "https://kcc.okta.com/"                    \
-#          "https://windows365.microsoft.com/"
-

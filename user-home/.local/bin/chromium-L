@@ -1,3 +1,4 @@
-#! /usr/bin/zsh
+#!/bin/zsh
 
-chromium --user-data-dir=${HOME}/.config/chromium-L --password-store=gnome # --app="https://leetcode.com/"
+[ -f ~/.zsh_aliases ] && source ~/.zsh_aliases
+chromium --user-data-dir=/Users/bvraghav/Library/Application\ Support/Chromium-L

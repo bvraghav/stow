@@ -1,3 +1,4 @@
 #! /bin/sh
 
-xclip -selection clipboard
+## On macOS, it's just another alias!
+pbcopy

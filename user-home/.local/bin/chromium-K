@@ -1,4 +1,0 @@
-#! /usr/bin/zsh
-
-# raghav.aiyyar
-chromium --user-data-dir=${HOME}/.config/chromium-K --password-store=gnome --app="https://google.com/"

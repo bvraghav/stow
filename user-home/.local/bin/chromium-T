@@ -1,8 +1,4 @@
-#! /usr/bin/zsh
+#!/bin/zsh
 
-if [[ ! -z "$@" ]] ; then
-  echo $@
-  chromium --user-data-dir=${HOME}/.config/chromium-T --password-store=gnome $@
-else
-  chromium --user-data-dir=${HOME}/.config/chromium-T --password-store=gnome --app="https://google.com/"
-fi
+[ -f ~/.zsh_aliases ] && source ~/.zsh_aliases
+chromium --user-data-dir=/Users/bvraghav/Library/Application\ Support/Chromium-T

@@ -1,5 +1,8 @@
 #! /bin/zsh
 
+## Code similarity profiling tool
+## https://github.com/manuel-freire/ac2
+
 local THIS_DIR=$(dirname $0)
 local PREFIX=${THIS_DIR}/ac2-latest
 local JAR=$(realpath -m ${PREFIX}/ac2-SNAPSHOT.jar)

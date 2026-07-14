@@ -1,146 +1,80 @@
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.zsh_histfile
-HISTSIZE=10000
-SAVEHIST=10000
+setopt aliases
+export PATH="/Users/bvraghav/.local/bin:$PATH"
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh
+
+[ -f ~/.zsh_aliases ] && source ~/.zsh_aliases
+
+# History behavior
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=20000          # lines kept in memory
+SAVEHIST=20000          # lines saved to $HISTFILE on exit
+setopt APPEND_HISTORY   # append instead of overwrite
+setopt SHARE_HISTORY   # share between sessions (optional)
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+
+# Broad prompt behaviour
 setopt autocd extendedglob nomatch notify
 unsetopt beep
 bindkey -e
-# End of lines configured by zsh-newuser-install
 
+## Unalias gm 
 ## ----------------------------------------------------
-## Local Plugins Setup
+## alias gm="git merge"
+## conflict with graphicsmagick (if installed)
+## 
+## Expected to be a long standing conflict with OMZ
 ## ----------------------------------------------------
-# Add local plugins directory to the zsh fpath
-export fpath=(~/.local/share/plugins.zsh $fpath)
-
-## ----------------------------------------------------
-## Completion Setup
-##
-##----------------------------------------------------
-# The following lines were added by compinstall
-zstyle :compinstall filename ${HOME}/.zshrc
-
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
-
-
-## Dh Completion Config
-##
-zstyle ':completion:*' auto-description 'specify: %d'
-zstyle ':completion:*' completer _expand _complete _correct _approximate
-zstyle ':completion:*' format 'Completing %d'
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' menu select=2
-eval "$(dircolors -b)"
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' list-colors ''
-zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
-zstyle ':completion:*' menu select=long
-zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle ':completion:*' use-compctl false
-zstyle ':completion:*' verbose true
-
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
-## ----------------------------------------------------
-
-
-## Prompt
-## -----------------------------------
-# # Initialise prompt
-# autoload -Uz promptinit
-# promptinit
-# prompt fire
-
-# This prompt has been improvised over pws theme
-PROMPT="%F{red}%B%(?..(%?%))%F{white}%(2L.+.)%(1j.[%j].)%F{cyan}%b%(t.Ding!.%D{%H:%M}) %F{magenta}%n%F{yellow}@%F{magenta}%m %F{yellow}%b%3~%B>%f%b "
-
-## Zsh Options
-## -----------------------------------
-setopt HIST_IGNORE_ALL_DUPS
-setopt SHARE_HISTORY
-
-
-## Zsh Completion Options
-## -----------------------------------
-zstyle ':completion:*' menu select
-zstyle ':completion:*' rehash true
-
-
-## Zsh Search
-## -----------------------------------
-autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-
-[[ -n "$key[Up]"   ]] && bindkey -- "$key[Up]"   up-line-or-beginning-search
-[[ -n "$key[Down]" ]] && bindkey -- "$key[Down]" down-line-or-beginning-search
-
-
-## Zsh Highlighting
-## -----------------------------------
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-
-## Zsh Completion for gitflow
-## ----------------------------------------------------
-## Prereq:
-## yay -S gitflow-cjs gitflow-zshcompletion-avh
-local usr=/home/bvr/.local/share/plugins.zsh
-local sys=/usr/share/zsh/site-functions
-source ${lcl}/git-flow-completion.zsh \
-       2>/dev/null \
-  || source ${sys}/git-flow-completion.zsh \
-            2>/dev/null \
-  || {
-    cat >&2 <<EOF
-[ WARNING ] git-flow not installed.  Try:
-[ WARNING ]   yay -S gitflow-cjs gitflow-zshcompletion-avh
-EOF
-  }
-
-
-## Key bindings
-## -----------------------------------
-bindkey -e
-
-
-## Load aliases
-## -----------------------------------
-alias ls='ls --color=auto -h '
-alias -g emacs-init='~/.emacs.d/init.el'
-
-
-## Load math
-## -----------------------------------
-zmodload zsh/mathfunc
-
-# ## Env
-# ## -----------------------------------
-# PATH="/home/bvr/perl5/bin${PATH:+:${PATH}}"; export PATH;
-# PERL5LIB="/home/bvr/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-# PERL_LOCAL_LIB_ROOT="/home/bvr/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-# PERL_MB_OPT="--install_base \"/home/bvr/perl5\""; export PERL_MB_OPT;
-# PERL_MM_OPT="INSTALL_BASE=/home/bvr/perl5"; export PERL_MM_OPT;
-
+## Assumes graphicsmagick was also a "brew install"
+[ -x $(brew --prefix graphicsmagick)/bin/gm ] && \
+  unalias gm
 
 ## Load simple functions if available.
 ## ----------------------------------------------------
 [ -f ~/.functions.zsh ] && \
   source ~/.functions.zsh
+## ----------------------------------------------------
 
+## D-Bus Integration
+## ----------------------------------------------------
+## Native Homebrew D-Bus Auto-Start & Shell Integration
+## ----------------------------------------------------
+has_brew_prefix () {
+  command -v brew &>/dev/null && \
+    [ -d "$(brew --prefix dbus 2>/dev/null)" ]
+}
+
+if has_brew_prefix ; then
+
+  DBUS_PLIST="$(brew --prefix dbus)/org.freedesktop.dbus-session.plist"
+  USER_GUI_DOMAIN="gui/$(id -u)"
+
+  # 1. Inspect launchctl: If the service isn't registered/running, bootstrap it silently
+  if ! launchctl print "$USER_GUI_DOMAIN/org.freedesktop.dbus-session" &>/dev/null; then
+      launchctl bootstrap "$USER_GUI_DOMAIN" "$DBUS_PLIST" 2>/dev/null
+  fi
+
+  # 2. Extract the dynamic socket path allocated by launchd
+  export DBUS_LAUNCHD_SESSION_BUS_SOCKET=$(launchctl getenv DBUS_LAUNCHD_SESSION_BUS_SOCKET)
+
+  # 3. Export the standard address variable for downstream Linux applications
+  if [ -n "$DBUS_LAUNCHD_SESSION_BUS_SOCKET" ]; then
+      export DBUS_SESSION_BUS_ADDRESS="unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET"
+  fi
+fi
 ## ----------------------------------------------------
 
 ## Following code for conda init has been edited by
 ## BVR: Abstracted out home directories for conda to
 ## function.
-
+## 
 ## 1. Abstract out the conda root folder and the rest all
 ## remains good.
-
 ## ----------------------------------------------------
 
 bvr__conda_root=$(realpath ~/miniconda3)

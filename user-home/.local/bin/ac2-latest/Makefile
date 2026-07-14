@@ -1,4 +1,4 @@
-SHELL           := /usr/bin/zsh
+SHELL           := /bin/zsh
 
 REPO		:= ${HOME}/src/ac2
 

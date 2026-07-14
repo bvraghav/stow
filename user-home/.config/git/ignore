@@ -1,7 +1,8 @@
+# -*- mode: gitignore; -*-
+
 # Latex images
 ltximg/
 
-# -*- mode: gitignore; -*-
 *~
 \#*\#
 /.emacs.desktop

@@ -1,5 +1,5 @@
 set synctex true
-set synctex-editor-command "emacsclient +%{line} %{input}"
+set synctex-editor-command "fire_emacs +%{line} %{input}"
 set recolor-lightcolor "#3F3F3F"
 set recolor true
 set selection-clipboard clipboard

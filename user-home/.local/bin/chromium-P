@@ -1,3 +1,4 @@
-#! /usr/bin/zsh
+#!/bin/zsh
 
-chromium --user-data-dir=${HOME}/.config/chromium-P --incognito --new-window ${@}
+[ -f ~/.zsh_aliases ] && source ~/.zsh_aliases
+chromium --user-data-dir=/Users/bvraghav/Library/Application\ Support/Chromium-P --incognito --no-first-run
