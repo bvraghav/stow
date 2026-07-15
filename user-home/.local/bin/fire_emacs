@@ -4,6 +4,8 @@ CONDA_ENV=emacs
 PARSER_DEF+="nf=OPT_NO_FRAME -no-frame=OPT_NO_FRAME "
 PARSER_DEF+="wd=OPT_WITH_DAEMON -with-daemon=OPT_WITH_DAEMON "
 PARSER_DEF+="s:=OPT_SOCKET -socket:=OPT_SOCKET "
+MAMBA_EXE="${HOME}/.local/bin/micromamba";
+MAMBA_ROOT_PREFIX="${HOME}/micromamba";
 
 err () {
   echo ${=@} >&2
@@ -76,7 +78,13 @@ is-daemon () {
 }
 
 conda-activate () {
-  source ~/miniconda3/bin/activate ${CONDA_ENV}
+  # source ~/miniconda3/bin/activate ${CONDA_ENV}
+
+  # Using micromamba, it's slightly more elaborate to activate the env.
+  eval "$(${MAMBA_EXE} shell hook \
+      --shell zsh \
+      --root-prefix ${MAMBA_ROOT_PREFIX})" && \
+    micromamba activate ${CONDA_ENV}
 }
 
 get-nvm-dir () {
